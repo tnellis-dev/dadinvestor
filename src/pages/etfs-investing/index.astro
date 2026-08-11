@@ -1,0 +1,143 @@
+---
+// src/pages/etfs-investing/index.astro
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { Image } from 'astro:assets';
+
+// Category Hub Configuration
+const categoryInfo = {
+  title: "Investing & ETFs",
+  categoryBadge: "Category Hub",
+  updatedDate: "August 2026",
+  description: "Plain-English ETF guides, index fund portfolio breakdowns, and long-term wealth strategies built specifically for everyday Australian parents and investors."
+};
+
+const hubArticles = [
+  {
+    slug: 'best-etf-in-australia',
+    title: 'Best ETFs in Australia (2026 Guide for Everyday Investors)',
+    readTime: '8 min read',
+    updatedDate: 'August 2026',
+    excerpt: 'Looking for the best exchange-traded funds to build long-term wealth? Here is our plain-English breakdown of core ASX index funds, fees, and strategy.',
+    featured: true,
+    image: 'https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&w=1200&q=80',
+  },
+  {
+    slug: 'raiz-review',
+    title: 'Raiz Review: Is Micro-Investing Worth It in Australia?',
+    readTime: '5 min read',
+    updatedDate: 'August 2026',
+    excerpt: 'An independent, jargon-free review of Raiz micro-investing. Look at fees, portfolio performance history, and whether it fits your family budget.',
+    featured: false,
+    image: 'https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?auto=format&fit=crop&w=1200&q=80',
+  },
+  {
+    slug: 'vanguard-vs-betashares',
+    title: 'Vanguard vs BetaShares: Which ETF Issuer Wins for Aussie Portfolios?',
+    readTime: '7 min read',
+    updatedDate: 'July 2026',
+    excerpt: 'Comparing management expense ratios, fund size, liquidity, and tracking error between Australia’s two biggest ETF providers.',
+    featured: false,
+    image: 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=1200&q=80',
+  },
+];
+---
+
+<BaseLayout 
+  title="ETFs & Investing Hub" 
+  description="Plain-English ETF guides, broker reviews, and long-term investment strategies designed for Australian parents."
+>
+  
+  <!-- Hub Header Hero Banner -->
+  <header class="bg-[#0F291E] text-white py-16 px-4 border-b border-emerald-900/50">
+    <div class="max-w-7xl mx-auto space-y-4">
+      <div class="flex items-center gap-3">
+        <span class="bg-[#10B981]/20 text-[#10B981] font-semibold text-xs uppercase tracking-wider px-3 py-1 rounded-full border border-[#10B981]/30">
+          Hub Directory
+        </span>
+        <span class="text-slate-400 text-sm">• Updated 2026</span>
+      </div>
+      
+      <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight leading-tight text-white max-w-4xl">
+        ETFs & Long-Term Investing
+      </h1>
+      
+      <p class="text-lg text-slate-300 leading-relaxed font-normal max-w-3xl">
+        Cut through the corporate jargon. Here is our complete library of independent, data-driven guides on building a low-cost, set-and-forget portfolio on the ASX.
+      </p>
+    </div>
+  </header>
+
+  <!-- Main Content Area -->
+  <main class="bg-[#F8FAFC] py-16 px-4">
+    <div class="max-w-7xl mx-auto space-y-12">
+      
+      
+
+      <!-- 3-Column Desktop Grid Feed -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
+        {hubArticles.map((article) => (
+          <article class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm hover:border-[#10B981]/50 transition flex flex-col justify-between">
+            
+            <div>
+              <!-- Uniform Image Container -->
+              <div class="aspect-[16/9] overflow-hidden bg-slate-100 border-b border-slate-100">
+                <Image 
+                  src={article.image} 
+                  alt={article.title}
+                  width={600}
+                  height={338}
+                  loading="lazy"
+                  class="w-full h-full object-cover hover:scale-105 transition duration-500"
+                />
+              </div>
+
+              <!-- Card Body -->
+              <div class="p-6 space-y-3">
+                <div class="flex items-center gap-2 flex-wrap">
+                  <span class="text-xs font-semibold text-[#10B981] bg-emerald-50 px-2.5 py-1 rounded-md border border-emerald-100">
+                    {article.readTime}
+                  </span>
+                  <span class="text-xs text-slate-400">Updated {article.updatedDate}</span>
+                </div>
+
+                <h3 class="text-xl font-bold text-[#0F291E] leading-snug">
+                  <a href={`/${article.slug}`} class="hover:text-[#10B981] transition">
+                    {article.title}
+                  </a>
+                </h3>
+
+                <p class="text-slate-600 text-sm leading-relaxed">
+                  {article.excerpt}
+                </p>
+              </div>
+            </div>
+
+            <!-- Card Footer Link -->
+            <div class="p-6 pt-0">
+              <a href={`/${article.slug}`} class="inline-flex items-center gap-1.5 text-sm font-bold text-[#0F291E] hover:text-[#10B981] transition">
+                Read Full Guide →
+              </a>
+            </div>
+
+          </article>
+        ))}
+      </div>
+
+      <!-- Bottom Flagship Tool Banner -->
+      <div class="bg-[#0F291E] text-white rounded-2xl p-8 md:p-10 border border-emerald-900/60 shadow-lg flex flex-col md:flex-row items-center justify-between gap-6">
+        <div class="space-y-2 max-w-xl">
+          <span class="text-xs uppercase tracking-wider text-[#10B981] font-bold">Interactive Tool</span>
+          <h3 class="text-2xl font-bold tracking-tight text-white">Map Your Wealth in 3 Minutes</h3>
+          <p class="text-sm text-slate-300 leading-relaxed">
+            Test how regular monthly ETF contributions compound over a 10, 20, or 30-year horizon against your family budget.
+          </p>
+        </div>
+        <a href="/tools/future-wealth-calculator" class="shrink-0 bg-[#10B981] text-[#0F291E] font-bold px-6 py-3.5 rounded-xl hover:bg-emerald-400 transition shadow-sm text-center">
+          Launch Wealth Map →
+        </a>
+      </div>
+
+    </div>
+  </main>
+
+</BaseLayout>

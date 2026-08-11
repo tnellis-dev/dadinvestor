@@ -1,0 +1,189 @@
+---
+// src/pages/tools/dividend-payment-calculator.astro
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const toolDetails = {
+  title: 'Dividend Payment & Yield Calculator',
+  category: 'Income & Shares',
+  description: 'Estimate your regular passive cash flow from ASX shares and ETFs. Factor in share prices, dividend yields, and payment frequency to plan your passive income.',
+};
+---
+
+<BaseLayout 
+  title={`${toolDetails.title} - Dad Investor`} 
+  description={toolDetails.description}
+>
+  <!-- Header Banner -->
+  <header class="bg-[#0F291E] text-white py-12 px-4 border-b border-emerald-900/55">
+    <div class="max-w-7xl mx-auto space-y-3">
+      <div class="flex items-center gap-3">
+        <span class="bg-[#10B981]/20 text-[#10B981] font-semibold text-xs uppercase tracking-wider px-3 py-1 rounded-full border border-[#10B981]/30">
+          {toolDetails.category}
+        </span>
+      </div>
+      
+      <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight leading-tight text-white max-w-4xl">
+        {toolDetails.title}
+      </h1>
+      
+      <p class="text-base text-slate-300 leading-relaxed max-w-3xl">
+        {toolDetails.description}
+      </p>
+    </div>
+  </header>
+
+  <!-- Main Content Layout with Sidebar -->
+  <main class="bg-[#F8FAFC] py-16 px-4">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+      
+      <!-- Left Column: Calculator Interface & Results (8 Columns) -->
+      <div class="lg:col-span-8 space-y-8">
+        
+        <!-- Standard Body Text Above Calculator -->
+        <div class="prose prose-slate max-w-none space-y-4">
+          <p class="text-slate-700 leading-relaxed text-base sm:text-lg">
+            Use this calculator to project your dividend income streams from your share portfolio. View both your total annual cash flow and the average per-distribution payout based on your chosen frequency.
+          </p>
+          <p class="text-slate-600 text-sm leading-relaxed">
+            Note that dividends are typically paid out as distinct lump sums rather than an even monthly trickle. The per-period payout shown below is an mathematical average to help you map your cash flow.
+          </p>
+        </div>
+
+        <!-- 🚀 PLACEHOLDER SLOT: ABOVE RESULTS -->
+        <div class="hidden bg-slate-50 border border-dashed border-slate-300 rounded-2xl p-4 text-center text-xs text-slate-400">
+          [Placeholder: Content or notes above results]
+        </div>
+
+        <!-- Input Form Card -->
+        <div class="bg-white border border-slate-200 rounded-3xl p-6 md:p-10 shadow-sm">
+          <h2 class="text-xl font-bold text-[#0F291E] border-b border-slate-100 pb-4 mb-6">Enter Your Numbers</h2>
+          
+          <form id="dividend-calculator" class="space-y-6">
+            <div>
+              <label for="shares" class="block text-sm font-semibold text-slate-700 mb-2">Number of Shares:</label>
+              <input type="number" id="shares" value="1000" required class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 text-slate-900 font-medium focus:outline-none focus:border-[#10B981]">
+            </div>
+            
+            <div>
+              <label for="price" class="block text-sm font-semibold text-slate-700 mb-2">Share Price ($):</label>
+              <input type="number" step="0.01" id="price" value="30.00" required class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 text-slate-900 font-medium focus:outline-none focus:border-[#10B981]">
+            </div>
+            
+            <div>
+              <label for="yield" class="block text-sm font-semibold text-slate-700 mb-2">Dividend Yield (in %):</label>
+              <input type="number" step="0.01" id="yield" value="4.5" required class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 text-slate-900 font-medium focus:outline-none focus:border-[#10B981]">
+            </div>
+            
+            <div>
+              <label for="frequency" class="block text-sm font-semibold text-slate-700 mb-2">Dividend Payment Frequency:</label>
+              <select id="frequency" required class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 text-slate-900 font-medium focus:outline-none focus:border-[#10B981]">
+                <option value="4">Quarterly (4 times a year)</option>
+                <option value="2">Semi-Annually (2 times a year)</option>
+                <option value="1">Annually (1 time a year)</option>
+              </select>
+            </div>
+            
+            <button type="submit" class="w-full bg-[#10B981] hover:bg-emerald-600 text-[#0F291E] font-bold py-4 rounded-xl transition shadow-sm text-center block cursor-pointer">
+              Calculate Dividend Payment
+            </button>
+          </form>
+        </div>
+
+        <!-- Enhanced Results Display Box -->
+        <div class="bg-[#0F291E] text-white rounded-3xl p-8 shadow-xl space-y-6">
+          <span class="text-xs uppercase tracking-wider text-[#10B981] font-bold">Projected Outcome</span>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
+            <div class="bg-emerald-950/40 border border-emerald-500/20 rounded-2xl p-5">
+              <span class="text-xs text-slate-300 uppercase tracking-wider font-medium">Total Annual Dividend</span>
+              <div id="annual-result" class="text-3xl font-black text-white font-mono mt-1">$1,350.00</div>
+            </div>
+            <div class="bg-emerald-950/40 border border-emerald-500/20 rounded-2xl p-5">
+              <span class="text-xs text-slate-300 uppercase tracking-wider font-medium">Average Per Payout</span>
+              <div id="per-period-result" class="text-3xl font-black text-[#10B981] font-mono mt-1">$337.50</div>
+            </div>
+          </div>
+
+          <p id="frequency-label" class="text-xs text-slate-300 leading-relaxed pt-2 border-t border-emerald-900/60">
+            Paid out <span class="text-white font-semibold">quarterly</span>, resulting in 4 distributions per year. Note: The per-payout figure is an mathematical average, not an exact or smoothing guarantee of individual distributions.
+          </p>
+        </div>
+
+        <!-- 🚀 PLACEHOLDER SLOT: BELOW RESULTS -->
+        <div class="bg-white border border-dashed border-slate-200 rounded-2xl p-6 text-center text-xs text-slate-400 space-y-2">
+          <p>[Placeholder: Disclaimer, tax notes, or export options below results]</p>
+        </div>
+
+      </div>
+
+      <!-- Right Column: Sidebar for Ads & Quick Links (4 Columns) -->
+      <aside class="lg:col-span-4 space-y-8 sticky top-28">
+        
+        <!-- Ad / Sponsor Box -->
+        <div class="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm space-y-4 text-center">
+          <span class="bg-slate-100 text-slate-500 font-semibold text-[10px] uppercase tracking-wider px-2.5 py-1 rounded-md">
+            Sponsored / Partner Offer
+          </span>
+          <h3 class="text-lg font-bold text-[#0F291E]">Looking for a Low-Fee Broker?</h3>
+          <p class="text-slate-600 text-sm leading-relaxed">
+            Compare top-rated Australian share trading platforms with our independent fee checker.
+          </p>
+          <a href="/apps-and-tools" class="inline-block w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-3 rounded-xl transition text-sm">
+            View Broker Reviews →
+          </a>
+        </div>
+
+        <!-- Related Calculators Quick Links -->
+        <div class="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm space-y-4">
+          <h3 class="text-base font-bold text-[#0F291E] border-b border-slate-100 pb-3">Other Calculators</h3>
+          <ul class="space-y-3 text-sm">
+            <li>
+              <a href="/tools/future-wealth-calculator" class="text-slate-700 hover:text-[#10B981] font-medium transition block">
+                → Future Wealth Calculator
+              </a>
+            </li>
+            <li>
+              <a href="/tools/dollar-cost-averaging" class="text-slate-700 hover:text-[#10B981] font-medium transition block">
+                → Dollar Cost Averaging (DCA) Tool
+              </a>
+            </li>
+            <li>
+              <a href="/tools/super-contributions-forecaster" class="text-slate-700 hover:text-[#10B981] font-medium transition block">
+                → Super Contributions Forecaster
+              </a>
+            </li>
+          </ul>
+        </div>
+
+      </aside>
+
+    </div>
+  </main>
+</BaseLayout>
+
+<script>
+  document.getElementById("dividend-calculator")?.addEventListener("submit", function (event) {
+    event.preventDefault();
+    
+    const shares = parseFloat((document.getElementById("shares") as HTMLInputElement)?.value || "0");
+    const sharePrice = parseFloat((document.getElementById("price") as HTMLInputElement)?.value || "0");
+    const dividendYield = parseFloat((document.getElementById("yield") as HTMLInputElement)?.value || "0");
+    const frequencySelect = document.getElementById("frequency") as HTMLSelectElement;
+    const frequency = parseInt(frequencySelect?.value || "1");
+    const frequencyText = frequencySelect.options[frequencySelect.selectedIndex].text.split(" ")[0];
+    
+    const annualDividendPerShare = (sharePrice * dividendYield) / 100;
+    const annualDividend = shares * annualDividendPerShare;
+    const paymentPerPeriod = annualDividend / frequency;
+    
+    const annualResultEl = document.getElementById("annual-result");
+    const perPeriodResultEl = document.getElementById("per-period-result");
+    const freqLabelEl = document.getElementById("frequency-label");
+
+    if (annualResultEl) annualResultEl.innerHTML = `$${annualDividend.toFixed(2)}`;
+    if (perPeriodResultEl) perPeriodResultEl.innerHTML = `$${paymentPerPeriod.toFixed(2)}`;
+    if (freqLabelEl) {
+      freqLabelEl.innerHTML = `Paid out <span class="text-white font-semibold">${frequencyText.toLowerCase()}</span>, resulting in ${frequency} distributions per year. Note: The per-payout figure is a mathematical average, not an exact or smoothing guarantee of individual distributions.`;
+    }
+  });
+</script>

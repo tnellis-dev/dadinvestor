@@ -1,0 +1,233 @@
+---
+// src/pages/tools/mortgage-offset-calculator.astro
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const toolDetails = {
+  title: 'Tax-Adjusted Mortgage Offset Calculator',
+  category: 'Debt & Borrowing',
+  description: 'Discover the true, tax-free power of your offset account. Compare your guaranteed loan interest savings directly against standard taxed investment returns.',
+};
+---
+
+<BaseLayout 
+  title={`${toolDetails.title} - Dad Investor`} 
+  description={toolDetails.description}
+>
+  
+  <!-- Header Banner -->
+  <header class="bg-[#0F291E] text-white py-12 px-4 border-b border-emerald-900/55">
+    <div class="max-w-7xl mx-auto space-y-3">
+      <div class="flex items-center gap-3">
+        <span class="bg-[#10B981]/20 text-[#10B981] font-semibold text-xs uppercase tracking-wider px-3 py-1 rounded-full border border-[#10B981]/30">
+          {toolDetails.category}
+        </span>
+      </div>
+      
+      <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight leading-tight text-white max-w-4xl">
+        {toolDetails.title}
+      </h1>
+      
+      <p class="text-base text-slate-300 leading-relaxed max-w-3xl">
+        {toolDetails.description}
+      </p>
+    </div>
+  </header>
+
+  <!-- Main Content Layout with Sidebar -->
+  <main class="bg-[#F8FAFC] py-16 px-4">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+      
+      <!-- Left Column: Calculator Interface & Results (8 Columns) -->
+      <div class="lg:col-span-8 space-y-8">
+        
+        <!-- Standard Body Text Above Calculator -->
+        <div class="prose prose-slate max-w-none space-y-4">
+          <p class="text-slate-700 leading-relaxed text-base sm:text-lg">
+            When you keep cash in a standard high-interest savings account, the interest earned counts toward your taxable income and gets chipped away by your marginal tax rate. 
+          </p>
+          <p class="text-slate-600 text-sm leading-relaxed">
+            Money kept in an active <strong>mortgage offset account</strong> reduces the principal balance upon which your home loan interest is calculated. Because mortgage interest is paid with post-tax dollars, the savings you receive are effectively 100% tax-free. Enter your numbers below and click calculate to evaluate your true effective return.
+          </p>
+        </div>
+
+        <!-- Calculator Input & Results Card -->
+        <div class="bg-white border border-slate-200 rounded-3xl p-6 md:p-10 shadow-sm space-y-8">
+          <h2 class="text-xl font-bold text-[#0F291E] border-b border-slate-100 pb-4">Enter Your Mortgage Details</h2>
+          
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div>
+              <label for="principal" class="block text-sm font-semibold text-slate-700 mb-2">Money Available ($)</label>
+              <div class="flex items-center rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 focus-within:border-[#10B981] transition">
+                <span class="text-slate-400 mr-2">$</span>
+                <input 
+                  type="number" 
+                  id="principal" 
+                  value="50000" 
+                  class="w-full bg-transparent text-slate-900 font-mono font-medium outline-none" 
+                />
+              </div>
+            </div>
+
+            <div>
+              <label for="interestRate" class="block text-sm font-semibold text-slate-700 mb-2">Mortgage Rate (%)</label>
+              <div class="flex items-center rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 focus-within:border-[#10B981] transition">
+                <input 
+                  type="number" 
+                  id="interestRate" 
+                  value="6.0" 
+                  step="0.05" 
+                  class="w-full bg-transparent text-slate-900 font-mono font-medium outline-none" 
+                />
+                <span class="text-slate-400 ml-2">%</span>
+              </div>
+            </div>
+
+            <div>
+              <label for="taxRate" class="block text-sm font-semibold text-slate-700 mb-2">Marginal Tax Rate (%)</label>
+              <div class="flex items-center rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 focus-within:border-[#10B981] transition">
+                <input 
+                  type="number" 
+                  id="taxRate" 
+                  value="34.5" 
+                  step="0.5" 
+                  class="w-full bg-transparent text-slate-900 font-mono font-medium outline-none" 
+                />
+                <span class="text-slate-400 ml-2">%</span>
+              </div>
+            </div>
+          </div>
+
+          <button 
+            id="calculate-button" 
+            type="button" 
+            class="w-full bg-[#10B981] hover:bg-emerald-600 text-[#0F291E] font-bold py-4 rounded-xl transition shadow-sm text-center block"
+          >
+            Calculate
+          </button>
+
+          <!-- Results Display Box (Starts Blank) -->
+          <div class="bg-[#0F291E] text-white rounded-2xl p-6 md:p-8 shadow-inner space-y-6">
+            <div>
+              <span class="text-xs uppercase tracking-wider text-[#10B981] font-bold">Offset Advantage Analysis</span>
+              <h3 class="text-lg font-bold text-white mt-0.5">Tax-Adjusted Equivalent Return</h3>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div class="rounded-xl bg-slate-900/60 border border-emerald-500/20 p-4">
+                <span class="text-xs text-slate-400 uppercase font-medium">Annual Interest Saved</span>
+                <div id="resAnnualSaved" class="text-2xl sm:text-3xl font-black text-white font-mono mt-1 tracking-tight">—</div>
+                <span class="text-[11px] text-emerald-400 font-medium">Guaranteed, tax-free cash back</span>
+              </div>
+
+              <div class="rounded-xl bg-slate-900/60 border border-emerald-500/20 p-4">
+                <span class="text-xs text-slate-400 uppercase font-medium">Pre-Tax Equivalent Return</span>
+                <div id="resPreTaxReturn" class="text-2xl sm:text-3xl font-black text-[#10B981] font-mono mt-1 tracking-tight">—</div>
+                <span class="text-[11px] text-slate-300 font-medium">Required return in a standard taxed account</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Placeholder Slot: Below Results / Notes -->
+        <div class="bg-white border border-slate-200 rounded-2xl p-6 text-xs text-slate-500 space-y-2 shadow-sm">
+          <p class="font-semibold text-slate-700">How is the pre-tax return calculated?</p>
+          <p>
+            Because investment earnings are taxed at your marginal rate, a standard investment must generate a higher return to match the risk-free, tax-free savings of an offset account. The formula used is: <code class="bg-slate-100 px-1.5 py-0.5 rounded text-slate-800 font-mono">Interest Rate / (1 - Tax Rate)</code>.
+          </p>
+        </div>
+
+        <div class="prose prose-slate max-w-none space-y-4">
+          <p class="text-slate-700 leading-relaxed text-base sm:text-lg">
+            When you keep cash in a standard high-interest savings account, the interest earned counts toward your taxable income and gets chipped away by your marginal tax rate. 
+          </p>
+          <p class="text-slate-600 text-sm leading-relaxed">
+            Money kept in an active <strong>mortgage offset account</strong> reduces the principal balance upon which your home loan interest is calculated. Because mortgage interest is paid with post-tax dollars, the savings you receive are effectively 100% tax-free. Enter your numbers below and click calculate to evaluate your true effective return.
+          </p>
+        </div>
+
+      </div>
+
+      <!-- Right Column: Sidebar for Ads & Quick Links (4 Columns) -->
+      <aside class="lg:col-span-4 space-y-8 sticky top-28">
+        
+        <!-- Ad / Sponsor Box -->
+        <div class="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm space-y-4 text-center">
+          <span class="bg-slate-100 text-slate-500 font-semibold text-[10px] uppercase tracking-wider px-2.5 py-1 rounded-md">
+            Sponsored / Partner Offer
+          </span>
+          <h3 class="text-lg font-bold text-[#0F291E]">Comparing Home Loan Rates?</h3>
+          <p class="text-slate-600 text-sm leading-relaxed">
+            Check out current variable and fixed rates featuring 100% full offset account capabilities.
+          </p>
+          <a href="/apps-and-tools" class="inline-block w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-3 rounded-xl transition text-sm text-center">
+            View Mortgage Comparisons →
+          </a>
+        </div>
+
+        <!-- Related Calculators Quick Links -->
+        <div class="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm space-y-4">
+          <h3 class="text-base font-bold text-[#0F291E] border-b border-slate-100 pb-3">Other Calculators</h3>
+          <ul class="space-y-3 text-sm">
+            <li>
+              <a href="/tools/future-wealth-calculator" class="text-slate-700 hover:text-[#10B981] font-medium transition block">
+                → Wealth Growth Calculator
+              </a>
+            </li>
+            <li>
+              <a href="/tools/dollar-cost-averaging" class="text-slate-700 hover:text-[#10B981] font-medium transition block">
+                → Dollar Cost Averaging (DCA) Tool
+              </a>
+            </li>
+            <li>
+              <a href="/tools/super-contributions-forecaster" class="text-slate-700 hover:text-[#10B981] font-medium transition block">
+                → Super Contributions Forecaster
+              </a>
+            </li>
+          </ul>
+        </div>
+
+      </aside>
+
+    </div>
+  </main>
+
+  <script>
+    function calculateOffset() {
+      const principalInput = document.getElementById('principal') as HTMLInputElement;
+      const interestRateInput = document.getElementById('interestRate') as HTMLInputElement;
+      const taxRateInput = document.getElementById('taxRate') as HTMLInputElement;
+
+      const resAnnualSaved = document.getElementById('resAnnualSaved');
+      const resPreTaxReturn = document.getElementById('resPreTaxReturn');
+
+      if (!principalInput || !interestRateInput || !taxRateInput || !resAnnualSaved || !resPreTaxReturn) return;
+
+      const principal = parseFloat(principalInput.value) || 0;
+      const interestRate = (parseFloat(interestRateInput.value) || 0) / 100;
+      const taxRate = (parseFloat(taxRateInput.value) || 0) / 100;
+
+      // Calculate annual interest saved
+      const annualInterestSaved = principal * interestRate;
+
+      // Calculate effective pre-tax return rate
+      const effectivePreTaxReturnRate = taxRate >= 1 ? 0 : interestRate / (1 - taxRate);
+
+      // Format and output results
+      resAnnualSaved.textContent = new Intl.NumberFormat('en-AU', {
+        style: 'currency',
+        currency: 'AUD',
+        maximumFractionDigits: 2
+      }).format(annualInterestSaved);
+
+      resPreTaxReturn.textContent = `${(effectivePreTaxReturnRate * 100).toFixed(2)}%`;
+    }
+
+    // Only attach event listener to button click (no auto-calc or load execution)
+    const btn = document.getElementById('calculate-button');
+    if (btn) {
+      btn.addEventListener('click', calculateOffset);
+    }
+  </script>
+
+</BaseLayout>

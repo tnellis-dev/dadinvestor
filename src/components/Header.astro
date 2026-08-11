@@ -1,0 +1,27 @@
+---
+// src/components/Header.astro
+---
+<header class="bg-[#0F291E] text-white border-b border-emerald-900/50 sticky top-0 z-50 shadow-md">
+  <div class="max-w-7xl mx-auto px-4 h-20 flex items-center justify-between">
+    
+    <a href="/" class="flex items-center gap-2 font-extrabold text-xl tracking-tight text-white">
+      <span class="w-8 h-8 rounded-lg bg-[#10B981] text-[#0F291E] flex items-center justify-center font-black text-base shadow-inner">
+        $
+      </span>
+      DadInvestor
+    </a>
+
+    <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-300">
+      <a href="/calculators-and-tools" class="hover:text-[#10B981] transition">Calculators & Tools</a>
+      <a href="/etfs-investing" class="hover:text-[#10B981] transition">ETFs & Investing</a>
+      <a href="/banking-savings" class="hover:text-[#10B981] transition">Banking & Savings</a>
+    </nav>
+
+    <div>
+      <a href="/calculators-and-tools/future-wealth-calculator" class="bg-[#10B981] text-[#0F291E] font-bold text-sm px-4 py-2.5 rounded-xl hover:bg-emerald-400 transition shadow-sm">
+        Future Wealth Calculator
+      </a>
+    </div>
+
+  </div>
+</header>

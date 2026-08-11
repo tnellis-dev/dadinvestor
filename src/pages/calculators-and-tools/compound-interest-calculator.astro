@@ -1,0 +1,67 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CompoundInterestCalculator from '../../components/compound/CompoundInterestCalculator';
+
+const toolDetails = {
+  title: 'Compound Interest Calculator',
+  category: 'Wealth & Investing',
+  description: 'See how regular deposits compound over time. Factor in variances to view best-case and worst-case investment scenarios.',
+};
+---
+
+<BaseLayout title={`${toolDetails.title} - Dad Investor`} description={toolDetails.description}>
+  <!-- Header Banner -->
+  <header class="bg-[#0F291E] text-white py-12 px-4 border-b border-emerald-900/55">
+    <div class="max-w-7xl mx-auto space-y-3">
+      <div class="flex items-center gap-3">
+        <span class="bg-[#10B981]/20 text-[#10B981] font-semibold text-xs uppercase tracking-wider px-3 py-1 rounded-full border border-[#10B981]/30">
+          {toolDetails.category}
+        </span>
+      </div>
+      <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight leading-tight text-white max-w-4xl">
+        {toolDetails.title}
+      </h1>
+      <p class="text-base text-slate-300 leading-relaxed max-w-3xl">
+        {toolDetails.description}
+      </p>
+    </div>
+  </header>
+
+  <!-- Main Content Layout with Sidebar -->
+  <main class="bg-[#F8FAFC] py-16 px-4">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+      
+      <!-- Left Column: React Calculator Island -->
+      <div class="lg:col-span-8 space-y-8">
+        <div class="prose prose-slate max-w-none space-y-4">
+          <p class="text-slate-700 leading-relaxed text-base sm:text-lg">
+            Use this calculator to project how your initial capital and regular savings will grow over time through compound interest.
+          </p>
+          <p class="text-slate-600 text-sm leading-relaxed">
+            Adjust your contribution frequencies, compound intervals, and optional variance percentage to explore best and worst-case return scenarios.
+          </p>
+        </div>
+
+        <!-- Mount React Island Here -->
+        <CompoundInterestCalculator client:load />
+      </div>
+
+      <!-- Right Column: Sidebar -->
+      <aside class="lg:col-span-4 space-y-8 sticky top-28">
+        <div class="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm space-y-4 text-center">
+          <span class="bg-slate-100 text-slate-500 font-semibold text-[10px] uppercase tracking-wider px-2.5 py-1 rounded-md">
+            Sponsored / Partner Offer
+          </span>
+          <h3 class="text-lg font-bold text-[#0F291E]">Looking for a Low-Fee Broker?</h3>
+          <p class="text-slate-600 text-sm leading-relaxed">
+            Compare top-rated Australian share trading platforms with our independent fee checker.
+          </p>
+          <a href="/apps-and-tools" class="inline-block w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-3 rounded-xl transition text-sm">
+            View Broker Reviews →
+          </a>
+        </div>
+      </aside>
+
+    </div>
+  </main>
+</BaseLayout>

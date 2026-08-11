@@ -1,0 +1,148 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+// Flagship Tool Callout
+const flagshipCalculator = {
+  title: 'Future Wealth Calculator (Wealth Map)',
+  category: 'My Favourite Tool',
+  excerpt: 'Map your complete 30-year net worth trajectory in one place. Factor in your starting capital, ETF contributions, Superannuation, property equity, and debt to discover your financial freedom number.',
+  slug: 'tools/future-wealth-calculator',
+};
+
+// Categorized Grid (Updated for 4 calculators total)
+const calculatorCategories = [
+  {
+    categoryTitle: 'Wealth & Investing',
+    categoryDesc: 'Tools to project portfolio compounding and passive dividend streams.',
+    tools: [
+      {
+        slug: 'tools/compound-interest-calculator',
+        title: 'Compound Interest Calculator',
+        badge: 'Wealth Growth',
+        badgeColor: 'text-[#10B981] bg-emerald-50 border-emerald-100',
+        excerpt: 'Model how regular contributions and compound returns scale your investment portfolio over time with flexible variance scenarios.',
+      },
+      {
+        slug: 'tools/dividend-payment-calculator',
+        title: 'Dividend Payment Calculator',
+        badge: 'Passive Income',
+        badgeColor: 'text-slate-600 bg-slate-100 border-slate-200',
+        excerpt: 'Forecast your dividend income streams, franking credit tax offsets, and Dividend Reinvestment Plan (DRP) accumulation.',
+      },
+    ],
+  },
+  {
+    categoryTitle: 'Debt & Strategy',
+    categoryDesc: 'Optimize your home loan offset returns against long-term market investing.',
+    tools: [
+      {
+        slug: 'tools/mortgage-offset-calculator',
+        title: 'Tax-Adjusted Mortgage Offset Calculator',
+        badge: 'Home Loan vs ETFs',
+        badgeColor: 'text-slate-600 bg-slate-100 border-slate-200',
+        excerpt: 'Compare the guaranteed tax-free return of saving interest in your offset account against investing extra cash into ETFs.',
+      },
+    ],
+  },
+];
+---
+
+<BaseLayout 
+  title="Calculators & Financial Tools - Dad Investor" 
+  description="Plain-English financial calculators built for Australian parents and everyday investors to model wealth, dividends, and mortgage offset strategies."
+>
+  
+  <!-- Clean Simple Hub Header on Dark Background -->
+  <header class="bg-[#0F291E] text-white py-16 px-4 border-b border-emerald-900/55">
+    <div class="max-w-7xl mx-auto space-y-4">
+      <div class="flex items-center gap-3">
+        <span class="bg-[#10B981]/20 text-[#10B981] font-semibold text-xs uppercase tracking-wider px-3 py-1 rounded-full border border-[#10B981]/30">
+          Interactive Toolkits
+        </span>
+        <span class="text-slate-400 text-sm">• Updated 2026</span>
+      </div>
+      
+      <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight leading-tight text-white max-w-4xl">
+        Calculators Built for Smart Money Decisions
+      </h1>
+      
+      <p class="text-lg text-slate-300 leading-relaxed font-normal max-w-3xl">
+        Stop guessing your financial future. Run the numbers with our simple, transparent tools designed for Australian families and investors.
+      </p>
+    </div>
+  </header>
+
+  <!-- Main Content Area on White/Light Background -->
+  <main class="bg-[#F8FAFC] py-4 px-4">
+    <div class="max-w-7xl mx-auto">
+      
+      <!-- Flagship Callout Section -->
+      <section class="mt-8 mb-16">
+        <div style="width: 75%; min-width: 320px;" class="bg-white border border-slate-200 rounded-3xl p-8 md:p-12 shadow-sm hover:shadow-md transition space-y-6">
+          
+          <div class="inline-block bg-emerald-50 text-[#10B981] text-xs font-bold px-3 py-1 rounded-full border border-emerald-200 uppercase tracking-wider">
+            {flagshipCalculator.category}
+          </div>
+
+          <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight leading-tight text-[#0F291E]">
+            {flagshipCalculator.title}
+          </h2>
+          
+          <p class="text-slate-600 text-base sm:text-lg leading-relaxed">
+            {flagshipCalculator.excerpt}
+          </p>
+          
+          <div class="pt-4">
+            <a href={`/${flagshipCalculator.slug}`} style="display: inline-flex; align-items: center; justify-content: center; padding: 16px 32px; background-color: #10B981; color: #0F291E; font-weight: 700; border-radius: 12px; text-decoration: none;" class="hover:bg-emerald-600 transition shadow-sm text-base">
+              Launch Future Wealth Calculator
+              <svg style="width: 20px; height: 20px; margin-left: 8px;" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Categorized Calculators Grid -->
+      <div class="space-y-16 my-12">
+        {calculatorCategories.map((cat) => (
+          <div class="space-y-6">
+            <div >
+              <h3 class="text-2xl font-bold text-[#0F291E]">{cat.categoryTitle}</h3>
+              <p class="text-slate-600 text-sm mt-1">{cat.categoryDesc}</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
+              {cat.tools.map((tool) => (
+                <article class="bg-white rounded-2xl border border-slate-200 p-6 hover:border-[#10B981]/50 transition shadow-sm hover:shadow-md flex flex-col justify-between">
+                  <div>
+                    <h4 class="text-lg font-bold text-[#0F291E] mb-2 leading-snug">
+                      <a href={`/${tool.slug}`} class="hover:text-[#10B981] transition">
+                        {tool.title}
+                      </a>
+                    </h4>
+
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                      {tool.excerpt}
+                    </p>
+                  </div>
+
+                  <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
+                    <span class={`text-xs font-semibold px-2.5 py-1 rounded-md border ${tool.badgeColor}`}>
+                      {tool.badge}
+                    </span>
+                    <a href={`/${tool.slug}`} class="text-sm font-bold text-[#0F291E] hover:text-[#10B981] transition inline-flex items-center gap-1">
+                      Open Tool →
+                    </a>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+
+    </div>
+  </main>
+
+</BaseLayout>

@@ -1,0 +1,221 @@
+---
+// src/pages/[slug].astro
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { Image } from 'astro:assets';
+
+export async function getStaticPaths() {
+  return [
+    { params: { slug: 'best-etf-in-australia' } },
+    { params: { slug: 'ubank-vs-up-bank' } },
+    { params: { slug: 'raiz-review' } },
+    { params: { slug: 'dividend-payment-calculator' } },
+  ];
+}
+
+const { slug } = Astro.params;
+
+const articles = {
+  'best-etf-in-australia': {
+    title: 'Best ETFs in Australia (2026 Guide for Everyday Investors)',
+    category: 'ETFs & Investing',
+    readTime: '8 min read',
+    updatedDate: 'August 2026',
+    excerpt: 'Looking for the best exchange-traded funds to build long-term wealth? Here is our plain-English breakdown of core ASX index funds, fees, and strategy for Aussie parents.',
+  },
+  'ubank-vs-up-bank': {
+    title: 'Ubank vs Up Bank: Which Digital Bank Wins in 2026?',
+    category: 'Banking & Savings',
+    readTime: '6 min read',
+    updatedDate: 'August 2026',
+    excerpt: 'Comparing high-interest savings rates, app features, budgeting tools, and everyday transaction accounts between two of Australia’s favourite neobanks.',
+  },
+  'raiz-review': {
+    title: 'Raiz Review: Is Micro-Investing Worth It in Australia?',
+    category: 'App Reviews',
+    readTime: '5 min read',
+    updatedDate: 'August 2026',
+    excerpt: 'An independent, jargon-free review of Raiz micro-investing. Look at fees, portfolio performance history, and whether it fits your family budget.',
+  }
+};
+
+const article = articles[slug as keyof typeof articles] || {
+  title: 'Financial Guide & Review',
+  category: 'Education',
+  readTime: '5 min read',
+  updatedDate: 'August 2026',
+  excerpt: 'Practical education and independent insights to help everyday Australians manage their money and build sustainable wealth.'
+};
+---
+
+<BaseLayout title={article.title} description={article.excerpt}>
+  <!-- Article Header Hero Banner -->
+  <header class="bg-[#0F291E] text-white py-16 px-4 border-b border-emerald-900/50">
+    <div class="max-w-7xl mx-auto space-y-4">
+      <div class="flex items-center gap-3">
+        <span class="bg-[#10B981]/20 text-[#10B981] font-semibold text-xs uppercase tracking-wider px-3 py-1 rounded-full border border-[#10B981]/30">
+          {article.category}
+        </span>
+        <span class="text-slate-400 text-sm">• {article.readTime}</span>
+        <span class="text-slate-400 text-sm">• Updated {article.updatedDate}</span>
+      </div>
+      
+      <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight leading-tight text-white max-w-4xl">
+        {article.title}
+      </h1>
+      
+      <p class="text-lg text-slate-300 leading-relaxed font-normal max-w-3xl">
+        {article.excerpt}
+      </p>
+
+      <!-- Author Trust Badge -->
+      <div class="flex items-center gap-3 pt-4 border-t border-emerald-900/60 mt-6 max-w-3xl">
+        <div class="w-10 h-10 rounded-full bg-[#10B981] text-[#0F291E] font-bold flex items-center justify-center text-sm shadow-inner shrink-0">
+          DI
+        </div>
+        <div>
+          <p class="text-sm font-medium text-white">Written by the DadInvestor Team</p>
+          <p class="text-xs text-slate-400">100% Independent & Jargon-Free Australian Financial Education</p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Grid Layout: Content + Sidebar -->
+  <main class="bg-[#F8FAFC] py-12 px-4">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+      
+      <!-- MAIN ARTICLE CONTENT (2 Columns on Desktop) -->
+      <div class="lg:col-span-2 space-y-8">
+        
+        <!-- Featured Image Component -->
+        <div class="space-y-2">
+          <div class="rounded-2xl overflow-hidden border border-slate-200 shadow-sm bg-white aspect-[16/9]">
+            <Image 
+              src="https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&w=1200&q=80" 
+              alt={article.title}
+              width={1200}
+              height={675}
+              loading="eager"
+              fetchpriority="high"
+              class="w-full h-full object-cover"
+            />
+          </div>
+          <p class="text-center text-xs text-slate-400 italic">
+            Independent Australian financial education designed for everyday families.
+          </p>
+        </div>
+
+        <!-- Key Takeaways Box -->
+        <div class="bg-white rounded-2xl border-2 border-[#10B981]/30 p-6 shadow-sm space-y-3">
+          <h3 class="text-lg font-bold text-[#0F291E] flex items-center gap-2">
+            <svg class="w-5 h-5 text-[#10B981]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            Key Takeaways
+          </h3>
+          <ul class="space-y-2 text-slate-700 text-sm md:text-base list-disc list-inside">
+            <li>Designed specifically for everyday Australian parents and intermediate wealth builders.</li>
+            <li>Independent analysis focused on long-term compound growth, low management fees, and tax efficiency.</li>
+            <li>Use our interactive tools below to model these exact strategies against your family budget.</li>
+          </ul>
+        </div>
+
+        <!-- Article Body -->
+        <article class="bg-white rounded-2xl border border-slate-200 p-8 shadow-sm space-y-6 text-slate-800 leading-relaxed">
+          <h2 class="text-2xl font-bold text-[#0F291E] pt-2">Understanding the Core Framework</h2>
+          <p>
+            When balancing a home loan, family expenses, Superannuation, and long-term investments, clarity is your greatest asset. Traditional financial media often wraps basic concepts in corporate jargon. Our goal at DadInvestor is to strip away the noise and focus on practical math.
+          </p>
+          
+          <h3 class="text-xl font-semibold text-[#0F291E] pt-4">How This Fits Into Your 30-Year Plan</h3>
+          <p>
+            Whether you are evaluating exchange-traded funds on the ASX or comparing high-yield digital transaction accounts, small structural choices compound significantly over decades.
+          </p>
+
+          <!-- Contextual Calculator Bridge CTA -->
+          <div class="my-8 p-6 bg-[#0F291E] rounded-2xl text-white space-y-4 shadow-md">
+            <div class="space-y-1">
+              <span class="text-xs uppercase tracking-wider text-[#10B981] font-bold">Interactive Tool Bridge</span>
+              <h4 class="text-xl font-bold">See How This Impacts Your Net Worth</h4>
+              <p class="text-sm text-slate-300">
+                Run the numbers through our flagship tool to see how regular contributions fit into your 30-year financial roadmap.
+              </p>
+            </div>
+            <a href="/tools/future-wealth-calculator" class="inline-block bg-[#10B981] text-[#0F291E] font-bold px-6 py-3 rounded-xl hover:bg-emerald-400 transition shadow-sm">
+              Launch Wealth Map Calculator →
+            </a>
+          </div>
+
+          <h3 class="text-xl font-semibold text-[#0F291E] pt-4">Final Thoughts</h3>
+          <p>
+            Always consider your personal risk tolerance and financial situation. Bookmark this page or explore our calculators hub for more data-driven comparisons.
+          </p>
+        </article>
+
+        <!-- Compliance Disclaimer Footer -->
+        <div class="p-6 bg-slate-100 rounded-2xl border border-slate-200 text-xs text-slate-500 space-y-2">
+          <p class="font-semibold text-slate-700">General Advice Disclaimer</p>
+          <p>
+            The information provided on DadInvestor.com.au is for general educational and informational purposes only. It does not constitute formal financial, tax, or legal advice. Always consult a licensed financial professional before making major investment decisions.
+          </p>
+        </div>
+
+      </div>
+
+      <!-- SIDEBAR (1 Column on Desktop, Sticky as you scroll) -->
+      <aside class="lg:col-span-1 space-y-6 lg:sticky lg:top-28">
+        
+        <!-- Widget 1: Flagship Calculator Promotion -->
+        <div class="bg-[#0F291E] text-white rounded-2xl p-6 border border-emerald-900/60 shadow-lg space-y-4">
+          <div class="flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-[#10B981] animate-pulse"></span>
+            <span class="text-xs uppercase tracking-wider text-[#10B981] font-bold">Flagship Tool</span>
+          </div>
+          <h3 class="text-xl font-bold tracking-tight text-white">Map Your Wealth in 3 Minutes</h3>
+          <p class="text-sm text-slate-300 leading-relaxed">
+            Model your superannuation, property equity, and ETF growth into a unified 30-year roadmap.
+          </p>
+          <a href="/tools/future-wealth-calculator" class="block w-full text-center bg-[#10B981] text-[#0F291E] font-bold py-3 rounded-xl hover:bg-emerald-400 transition shadow-sm">
+            Launch Wealth Map →
+          </a>
+        </div>
+
+        <!-- Widget 2: Mediavine Grow / Newsletter Opt-in Placeholder -->
+        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4">
+          <div class="space-y-1">
+            <span class="text-xs uppercase tracking-wider text-slate-400 font-semibold">Stay Updated</span>
+            <h4 class="text-base font-bold text-[#0F291E]">The DadInvestor Weekly</h4>
+          </div>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            No spam, just practical math, independent ETF breakdowns, and personal finance notes for Aussie parents.
+          </p>
+          <form class="space-y-2">
+            <input 
+              type="email" 
+              placeholder="Your email address" 
+              class="w-full px-3 py-2 text-sm rounded-lg border border-slate-300 focus:outline-none focus:border-[#10B981]"
+            />
+            <button type="submit" class="w-full bg-[#0F291E] text-white text-xs font-bold py-2.5 rounded-lg hover:bg-slate-800 transition">
+              Get the Newsletter
+            </button>
+          </form>
+        </div>
+
+        <!-- Widget 3: Digital Network / Searchlight Cross-Promotion -->
+        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-3">
+          <span class="text-xs uppercase tracking-wider text-slate-400 font-semibold">Network</span>
+          <h4 class="text-base font-bold text-[#0F291E]">Searchlight Web</h4>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            High-performance web infrastructure and custom applications built for modern creators and businesses.
+          </p>
+          <a href="https://searchlightweb.com.au" target="_blank" rel="noopener" class="inline-block text-xs font-bold text-[#10B981] hover:underline">
+            Visit Searchlight Web →
+          </a>
+        </div>
+
+      </aside>
+
+    </div>
+  </main>
+
+</BaseLayout>

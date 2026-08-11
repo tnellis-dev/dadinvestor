@@ -1,0 +1,146 @@
+---
+// src/pages/tools/future-wealth-calculator.astro
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const toolDetails = {
+  title: 'Compound Interest & Wealth Growth Calculator',
+  category: 'Wealth & Investing',
+  description: 'See how regular ETF or share investing snowballs over time. Factor in your starting capital, recurring contributions, and expected returns to map your freedom number.',
+};
+---
+
+<BaseLayout 
+  title={`${toolDetails.title} - Dad Investor`} 
+  description={toolDetails.description}
+>
+  
+  <!-- Header Banner -->
+  <header class="bg-[#0F291E] text-white py-12 px-4 border-b border-emerald-900/55">
+    <div class="max-w-7xl mx-auto space-y-3">
+      <div class="flex items-center gap-3">
+        <span class="bg-[#10B981]/20 text-[#10B981] font-semibold text-xs uppercase tracking-wider px-3 py-1 rounded-full border border-[#10B981]/30">
+          {toolDetails.category}
+        </span>
+      </div>
+      
+      <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight leading-tight text-white max-w-4xl">
+        {toolDetails.title}
+      </h1>
+      
+      <p class="text-base text-slate-300 leading-relaxed max-w-3xl">
+        {toolDetails.description}
+      </p>
+    </div>
+  </header>
+
+  <!-- Main Content Layout with Sidebar -->
+  <main class="bg-[#F8FAFC] py-16 px-4">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+      
+      <!-- Left Column: Calculator Interface & Results (8 Columns) -->
+      <div class="lg:col-span-8 space-y-8">
+        
+        <!-- Standard Body Text Above Calculator -->
+        <div class="prose prose-slate max-w-none space-y-4">
+          <p class="text-slate-700 leading-relaxed text-base sm:text-lg">
+            Use this calculator to map out your long-term wealth accumulation strategy. By understanding how compound interest works with regular automated contributions, you can visualize your path toward financial independence and see the true cost of getting started today.
+          </p>
+          <p class="text-slate-600 text-sm leading-relaxed">
+            Simply adjust your starting capital, monthly savings goals, and expected rate of return below to see how your portfolio scales over time.
+          </p>
+        </div>
+
+        <!-- Input Form Card -->
+        <div class="bg-white border border-slate-200 rounded-3xl p-6 md:p-10 shadow-sm space-y-6">
+          <h2 class="text-xl font-bold text-[#0F291E] border-b border-slate-100 pb-4">Enter Your Numbers</h2>
+          
+          <div class="space-y-6">
+            <div>
+              <label class="block text-sm font-semibold text-slate-700 mb-2">Initial Investment Capital ($)</label>
+              <input type="number" value="15000" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 text-slate-900 font-medium focus:outline-none focus:border-[#10B981]" />
+            </div>
+            <div>
+              <label class="block text-sm font-semibold text-slate-700 mb-2">Monthly Contribution ($)</label>
+              <input type="number" value="500" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 text-slate-900 font-medium focus:outline-none focus:border-[#10B981]" />
+            </div>
+            <div>
+              <label class="block text-sm font-semibold text-slate-700 mb-2">Expected Annual Return (%)</label>
+              <input type="number" value="8.5" step="0.1" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 text-slate-900 font-medium focus:outline-none focus:border-[#10B981]" />
+            </div>
+            <div>
+              <label class="block text-sm font-semibold text-slate-700 mb-2">Time Horizon (Years)</label>
+              <input type="number" value="20" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 text-slate-900 font-medium focus:outline-none focus:border-[#10B981]" />
+            </div>
+
+            <button type="button" class="w-full bg-[#10B981] hover:bg-emerald-600 text-[#0F291E] font-bold py-4 rounded-xl transition shadow-sm text-center block mt-6">
+              Calculate Growth
+            </button>
+          </div>
+        </div>
+
+        <!-- 🚀 PLACEHOLDER SLOT: ABOVE RESULTS -->
+        <div class="hidden bg-slate-50 border border-dashed border-slate-300 rounded-2xl p-4 text-center text-xs text-slate-400">
+          [Placeholder: Content or notes above results]
+        </div>
+
+        <!-- Results Display Box -->
+        <div class="bg-[#0F291E] text-white rounded-3xl p-8 shadow-xl space-y-4">
+          <span class="text-xs uppercase tracking-wider text-[#10B981] font-bold">Projected Outcome</span>
+          <div class="text-3xl sm:text-4xl font-black text-white">$412,850</div>
+          <p class="text-sm text-slate-300 leading-relaxed">
+            Based on your inputs, your portfolio value is projected to reach this amount after 20 years of monthly compounding contributions.
+          </p>
+        </div>
+
+        <!-- 🚀 PLACEHOLDER SLOT: BELOW RESULTS -->
+        <div class="bg-white border border-dashed border-slate-200 rounded-2xl p-6 text-center text-xs text-slate-400 space-y-2">
+          <p>[Placeholder: Disclaimer, tax notes, or export options below results]</p>
+        </div>
+
+      </div>
+
+      <!-- Right Column: Sidebar for Ads & Quick Links (4 Columns) -->
+      <aside class="lg:col-span-4 space-y-8 sticky top-28">
+        
+        <!-- Ad / Sponsor Box -->
+        <div class="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm space-y-4 text-center">
+          <span class="bg-slate-100 text-slate-500 font-semibold text-[10px] uppercase tracking-wider px-2.5 py-1 rounded-md">
+            Sponsored / Partner Offer
+          </span>
+          <h3 class="text-lg font-bold text-[#0F291E]">Looking for a Low-Fee Broker?</h3>
+          <p class="text-slate-600 text-sm leading-relaxed">
+            Compare top-rated Australian share trading platforms with our independent fee checker.
+          </p>
+          <a href="/apps-and-tools" class="inline-block w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-3 rounded-xl transition text-sm">
+            View Broker Reviews →
+          </a>
+        </div>
+
+        <!-- Related Calculators Quick Links -->
+        <div class="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm space-y-4">
+          <h3 class="text-base font-bold text-[#0F291E] border-b border-slate-100 pb-3">Other Calculators</h3>
+          <ul class="space-y-3 text-sm">
+            <li>
+              <a href="/tools/dollar-cost-averaging" class="text-slate-700 hover:text-[#10B981] font-medium transition block">
+                → Dollar Cost Averaging (DCA) Tool
+              </a>
+            </li>
+            <li>
+              <a href="/tools/super-contributions-forecaster" class="text-slate-700 hover:text-[#10B981] font-medium transition block">
+                → Super Contributions Forecaster
+              </a>
+            </li>
+            <li>
+              <a href="/tools/mortgage-payoff-crusher" class="text-slate-700 hover:text-[#10B981] font-medium transition block">
+                → Mortgage Payoff Crusher
+              </a>
+            </li>
+          </ul>
+        </div>
+
+      </aside>
+
+    </div>
+  </main>
+
+</BaseLayout>

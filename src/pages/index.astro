@@ -1,17 +1,133 @@
 ---
-
+// src/pages/index.astro
+import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout title="Dad Investor - Independent Australian Wealth Building">
+  <main>
+    <section class="bg-[#0F291E] text-white pt-16 pb-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+      <div class="mx-auto max-w-6xl text-center space-y-6">
+        <div class="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3.5 py-1 text-xs font-semibold text-[#10B981]">
+          <span>100% Independent</span>-<span>100% Australian</span>
+          
+        </div>
+
+        <h1 class="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl text-white">
+          Simple Tools & Practical Education <br class="hidden sm:inline" />
+          <span class="text-[#10B981]">for Everyday Aussie Investors.</span>
+        </h1>
+
+        <p class="mx-auto max-w-2xl text-base sm:text-lg text-slate-300">
+          Understand your money, compare options, and build long-term wealth with independent calculators and plain-English guides.
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-6 text-left max-w-4xl mx-auto">
+          <div class="rounded-2xl border border-slate-700 bg-slate-900/90 p-6 flex flex-col justify-between hover:border-emerald-500/50 transition">
+            <div class="space-y-3">
+              <div class="inline-block rounded-md bg-emerald-500/20 px-2.5 py-1 text-xs font-bold text-[#10B981]">
+                INTERACTIVE
+              </div>
+              <h2 class="text-2xl font-bold text-white">Financial Tools & Calculators</h2>
+              <p class="text-sm text-slate-300">
+                Model a 30-year wealth roadmap, forecast dividend cash flows, and compare mortgage offset accounts against ETF growth.
+              </p>
+            </div>
+            <div class="pt-6">
+              <a href="/calculators-and-tools" class="inline-flex w-full items-center justify-center rounded-xl bg-[#10B981] px-5 py-3 text-sm font-bold text-[#0F291E] hover:bg-emerald-400 transition">
+                Explore All Calculators →
+              </a>
+            </div>
+          </div>
+
+          <div class="rounded-2xl border border-slate-700 bg-slate-900/90 p-6 flex flex-col justify-between hover:border-emerald-500/50 transition">
+            <div class="space-y-3">
+              <div class="inline-block rounded-md bg-slate-800 px-2.5 py-1 text-xs font-bold text-slate-300">
+                RESEARCH
+              </div>
+              <h2 class="text-2xl font-bold text-white">Guides, Reviews & Comparisons</h2>
+              <p class="text-sm text-slate-300">
+                Read plain-English breakdowns on the best Australian ETFs, neobanks (Ubank vs UP), and micro-investing apps like Raiz.
+              </p>
+            </div>
+            <div class="pt-6">
+              <a href="/articles" class="inline-flex w-full items-center justify-center rounded-xl border border-slate-700 bg-slate-800/80 px-5 py-3 text-sm font-semibold text-white hover:bg-slate-800 transition">
+                Read Popular Guides →
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div class="flex items-center justify-between mb-8">
+        <div>
+          <h2 class="text-2xl font-bold text-slate-900 tracking-tight">Interactive Calculators</h2>
+          <p class="text-sm text-slate-600 mt-1">Built specifically for Australian tax, super, and investment rules.</p>
+        </div>
+        <a href="/calculators-and-tools" class="text-sm font-semibold text-[#0F291E] hover:text-[#10B981]">
+          View all tools →
+        </a>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <a href="/calculators-and-tools/future-wealth-calculator" class="group rounded-2xl border-2 border-emerald-500/30 bg-white p-6 shadow-sm hover:shadow-md transition">
+          <span class="inline-block rounded-full bg-emerald-100 px-2.5 py-0.5 text-xs font-bold text-emerald-800 mb-3">Forecaster</span>
+          <h3 class="text-lg font-bold text-slate-900 group-hover:text-[#10B981] transition">Future Wealth Calculator</h3>
+          <p class="text-sm text-slate-600 mt-2">Project your 30-year net worth combining Super, ETFs, property, and debt.</p>
+          <div class="mt-4 text-sm font-semibold text-[#0F291E]">Launch Calculator →</div>
+        </a>
+
+        <a href="/calculators-and-tools/mortgage-offset-calculator" class="group rounded-2xl border border-slate-200 bg-white p-6 shadow-sm hover:shadow-md transition">
+          <span class="inline-block rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-bold text-slate-700 mb-3">Debt Strategy</span>
+          <h3 class="text-lg font-bold text-slate-900 group-hover:text-[#10B981] transition">Mortgage vs. Invest</h3>
+          <p class="text-sm text-slate-600 mt-2">Calculate whether extra cash is better off in your offset account or invested.</p>
+          <div class="mt-4 text-sm font-semibold text-[#0F291E]">Launch Calculator →</div>
+        </a>
+      </div>
+    </section>
+
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 border-t border-slate-200">
+      <div class="flex items-center justify-between mb-8">
+        <div>
+          <h2 class="text-2xl font-bold text-slate-900 tracking-tight">Most Popular Guides & Comparisons</h2>
+          <p class="text-sm text-slate-600 mt-1">Beginner-friendly money & investing breakdowns.</p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <a href="/best-etf-in-australia" class="group rounded-2xl border border-slate-200 bg-white p-6 shadow-sm hover:shadow-md transition">
+          <span class="text-xs font-bold text-emerald-600 uppercase">ETFs & Investing</span>
+          <h3 class="text-lg font-bold text-slate-900 group-hover:text-[#10B981] transition mt-2">Best ETFs in Australia (2026)</h3>
+          <p class="text-sm text-slate-600 mt-2">Low-cost index picks, VAS vs A200, and simple portfolio setups for everyday Aussies.</p>
+          <div class="mt-4 text-sm font-semibold text-[#0F291E]">Read Guide →</div>
+        </a>
+
+        <a href="/ubank-vs-up-bank" class="group rounded-2xl border border-slate-200 bg-white p-6 shadow-sm hover:shadow-md transition">
+          <span class="text-xs font-bold text-emerald-600 uppercase">Banking</span>
+          <h3 class="text-lg font-bold text-slate-900 group-hover:text-[#10B981] transition mt-2">Ubank vs. UP Bank Review</h3>
+          <p class="text-sm text-slate-600 mt-2">High-interest savings account conditions, bonus rate rules, and app features compared.</p>
+          <div class="mt-4 text-sm font-semibold text-[#0F291E]">Read Review →</div>
+        </a>
+
+        <a href="/raiz-review" class="group rounded-2xl border border-slate-200 bg-white p-6 shadow-sm hover:shadow-md transition">
+          <span class="text-xs font-bold text-emerald-600 uppercase">App Reviews</span>
+          <h3 class="text-lg font-bold text-slate-900 group-hover:text-[#10B981] transition mt-2">Raiz Portfolio Review</h3>
+          <p class="text-sm text-slate-600 mt-2">Micro-investing breakdown, fee changes, portfolio options, and beginner tips.</p>
+          <div class="mt-4 text-sm font-semibold text-[#0F291E]">Read Review →</div>
+        </a>
+      </div>
+    </section>
+
+    <section class="bg-slate-900 text-white py-16 px-4">
+      <div class="max-w-4xl mx-auto text-center space-y-4">
+        <h2 class="text-2xl font-bold">Independent Australian Financial Education</h2>
+        <p class="text-slate-300 text-sm leading-relaxed max-w-2xl mx-auto">
+          DadInvestor is 100% independent. I don't sell financial products, give personal financial advice, or hide anything behind a subscription. My mission is simply to provide free tools and clear information so you can make informed decisions about your financial future.
+        </p>
+        <a href="/about" class="bg-slate-900 text-white ">About me</a>
+
+      </div>
+    </section>
+  </main>
+</BaseLayout>

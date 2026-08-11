@@ -1,0 +1,74 @@
+---
+// src/pages/about.astro
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { Image } from 'astro:assets';
+---
+
+<BaseLayout 
+  title="About Tim - Dad Investor" 
+  description="I help Financial DIYers own their money and future through plain-English education and simple financial tools."
+>
+  <!-- Hero Section -->
+  <section class="bg-[#F8FAFC] pt-16 pb-20 px-4 sm:px-6 lg:px-8 border-b border-slate-100">
+    <div class="max-w-4xl mx-auto text-center space-y-8">
+      
+      <!-- Headline -->
+      <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-[#0F172A] tracking-tight leading-tight">
+        Hi— I'm Tim. I help Financial DIYers own their money and future.
+      </h1>
+
+      <!-- Centered Circular Avatar with Accent Ring -->
+      <div class="relative inline-block mt-4">
+        <div class="w-40 h-40 sm:w-48 sm:h-48 rounded-full overflow-hidden border-4 border-[#10B981] shadow-lg mx-auto bg-slate-100">
+          <Image 
+            src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80" 
+            alt="Tim Ellis" 
+            width={400} 
+            height={400}
+            class="w-full h-full object-cover"
+            loading="eager"
+            fetchpriority="high"
+          />
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Intro Bio Card Below Fold -->
+  <main class="bg-white py-16 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-3xl mx-auto space-y-8 text-slate-700 text-lg leading-relaxed">
+      
+      <p class="text-center sm:text-left text-slate-800 text-xl font-medium">
+        Over the last 15 years, I've hit some major life milestones—marriage, kids, property investments, relocation, even dealing with redundancy.
+      </p>
+
+      <p>
+        Most financial media is written by suit-and-tie fund managers trying to sell complex products or keep you confused. I started Dad Investor to build the exact tools, calculators, and guides I wished I had when figuring out offset accounts, compounding ETF returns, and building long-term financial security for my family.
+      </p>
+
+      <!-- Key Principles Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-8">
+        <div class="bg-[#0F291E] text-white p-8 rounded-3xl space-y-3 shadow-md">
+          <span class="text-[#10B981] font-extrabold text-xs uppercase tracking-widest">Principle 01</span>
+          <h3 class="text-xl font-bold text-white">100% Plain English</h3>
+          <p class="text-slate-300 text-sm leading-relaxed">
+            No unnecessary Wall Street jargon. Just real math, clear numbers, and straightforward guidance for Aussie household budgets.
+          </p>
+        </div>
+
+        <div class="bg-emerald-50 border border-emerald-100 p-8 rounded-3xl space-y-3 shadow-sm">
+          <span class="text-emerald-800 font-extrabold text-xs uppercase tracking-widest">Principle 02</span>
+          <h3 class="text-xl font-bold text-[#0F291E]">Tools First, Opinions Second</h3>
+          <p class="text-slate-600 text-sm leading-relaxed">
+            Interactive math helps you make your own informed financial decisions with your own family's numbers.
+          </p>
+        </div>
+      </div>
+       <p>
+        Most financial media is written by suit-and-tie fund managers trying to sell complex products or keep you confused. I started Dad Investor to build the exact tools, calculators, and guides I wished I had when figuring out offset accounts, compounding ETF returns, and building long-term financial security for my family.
+      </p>
+
+    </div>
+  </main>
+</BaseLayout>
