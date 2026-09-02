@@ -1,14 +1,16 @@
-// astro.config.mjs
 import { defineConfig } from 'astro/config';
-import tailwindcss from '@tailwindcss/vite';
-
 import react from '@astrojs/react';
+import sanity from '@sanity/astro';
 
-// https://astro.build/config
 export default defineConfig({
-  vite: {
-    plugins: [tailwindcss()],
-  },
-
-  integrations: [react()],
+  output: 'static',
+  integrations: [
+    react(),
+    sanity({
+      projectId: 'ig18nrb8',
+      dataset: 'production',
+      useCdn: true,
+      studioBasePath: '/admin', // This hosts your studio button/interface at /admin
+    }),
+  ],
 });
