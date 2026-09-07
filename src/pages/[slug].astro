@@ -1,77 +1,141 @@
 ---
-// src/pages/[slug].astro
 import { sanityClient } from '../lib/sanity';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { PortableText } from "astro-portabletext";
+import ArticleSidebar from '../components/ArticleSidebar.astro';
+import { PortableText } from 'astro-portabletext';
 import { Image } from 'astro:assets';
 
-// 1. Tell Astro which static slugs exist by fetching them from Sanity
 export async function getStaticPaths() {
-  const posts = await sanityClient.fetch(`*[_type == "post" && defined(slug.current)]{ "slug": slug.current }`);
-  return posts.map((post: { slug: string }) => ({
-    params: { slug: post.slug },
+  const articles = await sanityClient.fetch(`
+    *[_type == "article" && defined(slug.current)]{
+      "slug": slug.current
+    }
+  `);
+
+  return articles.map((article: { slug: string }) => ({
+    params: { slug: article.slug },
   }));
 }
 
-// 2. Fetch the specific article data based on the current URL slug
 const { slug } = Astro.params;
-const post = await sanityClient.fetch(
-  `*[_type == "post" && slug.current == $slug][0]{
+
+const article = await sanityClient.fetch(
+  `*[_type == "article" && slug.current == $slug][0]{
     title,
-    excerpt,
-    publishedAt,
+    subtitle,
+    category,
+    author,
+    updatedDate,
+    readTimeMinutes,
+    keyTakeaways,
     body,
-    "imageUrl": mainImage.asset->url,
-    "categoryTitle": category->title,
-    "readTime": "6 min read"
+    disclaimer,
+    "imageUrl": heroImage.asset->url,
+    heroImageAlt
   }`,
   { slug }
 );
 
-if (!post) {
+if (!article) {
   return Astro.redirect('/404');
 }
 ---
 
-<BaseLayout title={post.title} description={post.excerpt}>
+<BaseLayout title={article.title} description={article.subtitle}>
+
+  <!-- Article Header -->
   <header class="bg-[#0F291E] text-white py-16 px-4 border-b border-emerald-900/50">
-    <div class="max-w-3xl mx-auto space-y-4">
-      <div class="flex items-center gap-3">
-        {post.categoryTitle && (
+<div class="max-w-6xl mx-auto">
+  <div class="lg:w-[calc(100%-352px)] space-y-4">
+          <div class="flex items-center gap-3">
+        {article.category && (
           <span class="bg-[#10B981]/20 text-[#10B981] font-semibold text-xs uppercase tracking-wider px-3 py-1 rounded-full border border-[#10B981]/30">
-            {post.categoryTitle}
+            {article.category}
           </span>
         )}
-        <span class="text-slate-400 text-sm">• {post.readTime}</span>
-      </div>
-      
-      <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight leading-tight text-white">
-        {post.title}
-      </h1>
-    </div>
-  </header>
 
-  <main class="bg-[#F8FAFC] py-12 px-4">
-    <div class="max-w-3xl mx-auto space-y-8">
-      
-      {post.imageUrl && (
-        <div class="rounded-2xl overflow-hidden border border-slate-200 shadow-sm bg-white aspect-[16/9]">
-          <Image 
-            src={post.imageUrl} 
-            alt={post.title} 
-            width={1200} 
-            height={675} 
-            loading="eager"
-            fetchpriority="high"
-            class="w-full h-full object-cover"
-          />
-        </div>
+        {article.readTimeMinutes && (
+          <span class="text-slate-400 text-sm">
+            • {article.readTimeMinutes} min read
+          </span>
+        )}
+      </div>
+
+      <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight leading-tight text-white">
+        {article.title}
+      </h1>
+
+      {article.subtitle && (
+        <p class="text-lg text-slate-300">
+          {article.subtitle}
+        </p>
       )}
 
-      <div class="bg-white rounded-2xl border border-slate-200 p-8 shadow-sm prose prose-slate max-w-none">
-        <PortableText value={post.body} />
+    </div>
+  </div>
+  </header>
+
+
+  <!-- Article Content + Sidebar -->
+  <main class="bg-[#F8FAFC] py-12 px-4">
+
+    <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_320px] gap-8 lg:items-start">
+
+      <!-- Main Article Column -->
+      <div class="space-y-8">
+
+        {article.imageUrl && (
+          <div class="rounded-2xl overflow-hidden border border-slate-200 shadow-sm bg-white aspect-[16/9]">
+            <Image
+              src={article.imageUrl}
+              alt={article.heroImageAlt || article.title}
+              width={1200}
+              height={675}
+              loading="eager"
+              fetchpriority="high"
+              class="w-full h-full object-cover"
+            />
+          </div>
+        )}
+
+        {article.keyTakeaways?.filter((takeaway: string) => takeaway.trim()).length > 0 && (
+          <div class="bg-white rounded-2xl border border-slate-200 p-8 shadow-sm">
+
+            <h2 class="text-xl font-bold mb-4">
+              Key Takeaways
+            </h2>
+
+            <ul class="list-disc pl-6 space-y-2">
+              {article.keyTakeaways
+                .filter((takeaway: string) => takeaway.trim())
+                .map((takeaway: string) => (
+                  <li>{takeaway}</li>
+                ))}
+            </ul>
+
+          </div>
+        )}
+
+        <div class="bg-white rounded-2xl border border-slate-200 p-8 shadow-sm prose prose-slate max-w-none">
+          <PortableText value={article.body} />
+        </div>
+
+        {article.disclaimer && (
+          <div class="text-sm text-slate-500 border-t border-slate-200 pt-6">
+            {article.disclaimer}
+          </div>
+        )}
+
+      </div>
+
+
+      <!-- Fixed Article Sidebar -->
+      <div class="lg:sticky lg:top-6">
+        <ArticleSidebar />
       </div>
 
     </div>
+
   </main>
+
 </BaseLayout>
