@@ -1,0 +1,68 @@
+---
+import imageUrlBuilder from '@sanity/image-url';
+import { sanityClient } from '../lib/sanity';
+
+const builder = imageUrlBuilder(sanityClient);
+
+const { node } = Astro.props;
+
+const image = node.image;
+
+if (!image?.asset) {
+  return;
+}
+
+const imageUrl = builder
+  .image(image)
+  .width(1200)
+  .quality(85)
+  .auto('format')
+  .url();
+
+const alt = node.alt || '';
+const caption = node.caption;
+const credit = node.credit;
+---
+
+<figure class="article-image">
+  <img
+    src={imageUrl}
+    alt={alt}
+    loading="lazy"
+    decoding="async"
+    width="1200"
+  />
+
+  {(caption || credit) && (
+    <figcaption>
+      {caption && <span>{caption}</span>}
+      {credit && <span class="credit">Source: {credit}</span>}
+    </figcaption>
+  )}
+</figure>
+
+<style>
+  .article-image {
+    margin: 2.5rem 0;
+  }
+
+  .article-image img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 0.75rem;
+  }
+
+  .article-image figcaption {
+    margin-top: 0.6rem;
+    font-size: 0.875rem;
+    line-height: 1.4;
+    color: #64748b;
+  }
+
+  .article-image .credit {
+    display: block;
+    margin-top: 0.2rem;
+    font-size: 0.8rem;
+  }
+</style>

@@ -1,5 +1,44 @@
 import { defineType, defineField } from 'sanity'
 
+
+export const articleImageType = defineType({
+  name: 'articleImage',
+  title: 'Article Image',
+  type: 'object',
+  fields: [
+    defineField({
+      name: 'image',
+      title: 'Image',
+      type: 'image',
+      options: {
+        hotspot: true,
+      },
+      validation: (Rule) => Rule.required(),
+    }),
+
+    defineField({
+      name: 'alt',
+      title: 'Alt Text',
+      description: 'Describe what is shown in the image for accessibility and SEO.',
+      type: 'string',
+    }),
+
+    defineField({
+      name: 'caption',
+      title: 'Caption',
+      description: 'Optional caption displayed underneath the image.',
+      type: 'string',
+    }),
+
+    defineField({
+      name: 'credit',
+      title: 'Source / Credit',
+      description: 'Optional source or credit for the image.',
+      type: 'string',
+    }),
+  ],
+})
+
 export const articleType = defineType({
   name: 'article',
   title: 'Articles & Guides',
@@ -103,8 +142,11 @@ export const articleType = defineType({
       title: 'Article Body',
       description: 'The main article content.',
       type: 'array',
-      of: [{ type: 'block' }],
-      group: 'content',
+      of: [
+       { type: 'block' },
+       { type: 'articleImage' },
+        ],
+       group: 'content',
     }),
 
     defineField({
@@ -147,4 +189,4 @@ export const articleType = defineType({
   ],
 })
 
-export const schemaTypes = [articleType]
+export const schemaTypes = [articleType, articleImageType]

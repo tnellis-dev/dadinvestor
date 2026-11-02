@@ -4,6 +4,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import ArticleSidebar from '../components/ArticleSidebar.astro';
 import { PortableText } from 'astro-portabletext';
 import { Image } from 'astro:assets';
+import ArticleImage from '../components/ArticleImage.astro';
 
 export async function getStaticPaths() {
   const articles = await sanityClient.fetch(`
@@ -39,6 +40,12 @@ const article = await sanityClient.fetch(
 if (!article) {
   return Astro.redirect('/404');
 }
+
+const portableTextComponents = {
+  type: {
+    articleImage: ArticleImage,
+  },
+};
 ---
 
 <BaseLayout title={article.title} description={article.subtitle}>
@@ -118,7 +125,10 @@ if (!article) {
 
         <div class="bg-white rounded-2xl border border-slate-200 p-8 shadow-sm">
   <div class="article-body">
-    <PortableText value={article.body} />
+    <PortableText
+  value={article.body}
+  components={portableTextComponents}
+/>
   </div>
 </div>
 
