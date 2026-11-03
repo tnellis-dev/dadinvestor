@@ -1,5 +1,57 @@
 import { defineType, defineField } from 'sanity'
 
+export const articleCalloutType = defineType({
+  name: 'articleCallout',
+  title: 'Article Callout',
+  type: 'object',
+  fields: [
+    defineField({
+      name: 'style',
+      title: 'Callout Style',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Note', value: 'note' },
+          { title: 'Tip', value: 'tip' },
+          { title: 'Warning', value: 'warning' },
+          { title: 'Key Takeaway', value: 'takeaway' },
+        ],
+        layout: 'dropdown',
+      },
+      initialValue: 'note',
+      validation: (Rule) => Rule.required(),
+    }),
+
+    defineField({
+      name: 'heading',
+      title: 'Heading',
+      description: 'Optional heading, e.g. NOTE or IMPORTANT.',
+      type: 'string',
+    }),
+
+    defineField({
+      name: 'content',
+      title: 'Callout Content',
+      type: 'array',
+      of: [{ type: 'block' }],
+      validation: (Rule) => Rule.required().min(1),
+    }),
+  ],
+
+  preview: {
+    select: {
+      style: 'style',
+      heading: 'heading',
+    },
+    prepare({ style, heading }) {
+      return {
+        title: heading || `${style || 'Note'} Callout`,
+        subtitle: 'Highlighted article content',
+      }
+    },
+  },
+})
+
 
 export const articleImageType = defineType({
   name: 'articleImage',
@@ -145,6 +197,7 @@ export const articleType = defineType({
       of: [
        { type: 'block' },
        { type: 'articleImage' },
+       { type: 'articleCallout' },
         ],
        group: 'content',
     }),
@@ -189,4 +242,8 @@ export const articleType = defineType({
   ],
 })
 
-export const schemaTypes = [articleType, articleImageType]
+export const schemaTypes = [
+  articleType,
+  articleImageType,
+  articleCalloutType,
+]

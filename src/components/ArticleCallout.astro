@@ -1,0 +1,72 @@
+
+---
+import { PortableText } from 'astro-portabletext';
+
+const { node } = Astro.props;
+
+const styles: Record<string, string> = {
+  note: 'callout--note',
+  tip: 'callout--tip',
+  warning: 'callout--warning',
+  takeaway: 'callout--takeaway',
+};
+
+const style = styles[node?.style || 'note'] || styles.note;
+---
+
+<aside class={`article-callout ${style}`}>
+  {node.heading && (
+    <strong class="callout-heading">{node.heading}: </strong>
+  )}
+
+  <div class="callout-content">
+    <PortableText value={node.content || []} />
+  </div>
+</aside>
+
+<style>
+  .article-callout {
+    padding: 24px 30px;
+    margin: 32px 0;
+    border-left: 5px solid;
+    font-size: 18px;
+    line-height: 1.8;
+  }
+
+  .callout--note {
+  background: #FFF1CC;
+  border-color: #E9B94F;
+}
+
+.callout--tip {
+  background: #E5F3EB;
+  border-color: #55B98A;
+}
+
+.callout--warning {
+  background: #FCE9E6;
+  border-color: #E46B5D;
+}
+
+.callout--takeaway {
+  background: #E9EFF8;
+  border-color: #7798C5;
+}
+ .callout-heading {
+  font-weight: 700;
+  color: #0B2118;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.callout-content :global(a) {
+  color: #0F5132;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.callout-content {
+  color: #1E293B;
+}
+</style>

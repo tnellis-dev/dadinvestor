@@ -5,6 +5,7 @@ import ArticleSidebar from '../components/ArticleSidebar.astro';
 import { PortableText } from 'astro-portabletext';
 import { Image } from 'astro:assets';
 import ArticleImage from '../components/ArticleImage.astro';
+import ArticleCallout from '../components/ArticleCallout.astro';
 
 export async function getStaticPaths() {
   const articles = await sanityClient.fetch(`
@@ -44,6 +45,8 @@ if (!article) {
 const portableTextComponents = {
   type: {
     articleImage: ArticleImage,
+        articleCallout: ArticleCallout,
+
   },
 };
 ---
