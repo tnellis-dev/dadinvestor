@@ -6,18 +6,26 @@ import { PortableText } from 'astro-portabletext';
 import { Image } from 'astro:assets';
 import ArticleImage from '../components/ArticleImage.astro';
 import ArticleCallout from '../components/ArticleCallout.astro';
+import ArticleYoutube from '../components/ArticleYoutube.astro';
+
 
 export async function getStaticPaths() {
   const articles = await sanityClient.fetch(`
+
+  
     *[_type == "article" && defined(slug.current)]{
       "slug": slug.current
     }
   `);
+  
 
   return articles.map((article: { slug: string }) => ({
     params: { slug: article.slug },
   }));
 }
+
+
+
 
 const { slug } = Astro.params;
 
@@ -38,6 +46,8 @@ const article = await sanityClient.fetch(
   { slug }
 );
 
+
+
 if (!article) {
   return Astro.redirect('/404');
 }
@@ -46,6 +56,8 @@ const portableTextComponents = {
   type: {
     articleImage: ArticleImage,
         articleCallout: ArticleCallout,
+        articleYoutube: ArticleYoutube,
+        
 
   },
 };

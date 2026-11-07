@@ -91,6 +91,42 @@ export const articleImageType = defineType({
   ],
 })
 
+
+export const articleYoutubeType = defineType({
+  name: 'articleYoutube',
+  title: 'YouTube Video',
+  type: 'object',
+  fields: [
+    defineField({
+      name: 'videoId',
+      title: 'YouTube URL',
+      description: 'Paste the full YouTube video URL',
+      type: 'url',
+      validation: (Rule) => Rule.required(),
+
+    }),
+
+    defineField({
+      name: 'caption',
+      title: 'Caption',
+      type: 'string',
+    }),
+  ],
+  preview: {
+    select: {
+      videoId: 'videoId',
+      caption: 'caption',
+    },
+    prepare({ videoId, caption }) {
+      return {
+        title: caption || 'YouTube Video',
+        subtitle: videoId,
+      }
+    },
+  },
+})
+
+
 export const articleType = defineType({
   name: 'article',
   title: 'Articles & Guides',
@@ -198,6 +234,8 @@ export const articleType = defineType({
        { type: 'block' },
        { type: 'articleImage' },
        { type: 'articleCallout' },
+       { type: 'articleYoutube' },
+
         ],
        group: 'content',
     }),
@@ -246,4 +284,6 @@ export const schemaTypes = [
   articleType,
   articleImageType,
   articleCalloutType,
+  articleYoutubeType,
+
 ]
