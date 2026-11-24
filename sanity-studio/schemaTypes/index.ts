@@ -36,6 +36,8 @@ export const articleCalloutType = defineType({
       of: [{ type: 'block' }],
       validation: (Rule) => Rule.required().min(1),
     }),
+
+    
   ],
 
   preview: {
@@ -126,6 +128,59 @@ export const articleYoutubeType = defineType({
   },
 })
 
+export const authorType = defineType({
+  name: 'author',
+  title: 'Authors',
+  type: 'document',
+
+  fields: [
+    defineField({
+      name: 'name',
+      title: 'Author Name',
+      type: 'string',
+      validation: (Rule) => Rule.required(),
+    }),
+
+    defineField({
+      name: 'slug',
+      title: 'Profile URL',
+      type: 'slug',
+      options: {
+        source: 'name',
+      },
+    }),
+
+    defineField({
+      name: 'bio',
+      title: 'Biography',
+      type: 'text',
+      rows: 4,
+    }),
+
+    defineField({
+      name: 'image',
+      title: 'Profile Image',
+      type: 'image',
+      options: {
+        hotspot: true,
+      },
+    }),
+
+    defineField({
+      name: 'website',
+      title: 'Website',
+      type: 'url',
+    }),
+
+    defineField({
+      name: 'sameAs',
+      title: 'Social Profile URLs',
+      description: 'Links to LinkedIn and other genuine author profiles.',
+      type: 'array',
+      of: [{ type: 'url' }],
+    }),
+  ],
+});
 
 export const articleType = defineType({
   name: 'article',
@@ -200,12 +255,27 @@ export const articleType = defineType({
       initialValue: 'DadInvestor Team',
     }),
 
-    defineField({
-      name: 'updatedDate',
-      title: 'Updated Date',
-      type: 'date',
-      group: 'content',
-    }),
+   defineField({
+  name: 'publishedAt',
+  title: 'Published Date',
+  type: 'datetime',
+  group: 'content',
+}),
+
+defineField({
+  name: 'authorProfile',
+  title: 'Author Profile',
+  type: 'reference',
+  to: [{ type: 'author' }],
+  group: 'content',
+}),
+
+defineField({
+  name: 'dateModified',
+  title: 'Last Updated',
+  type: 'datetime',
+  group: 'content',
+}),
 
     defineField({
       name: 'readTimeMinutes',
@@ -277,13 +347,57 @@ export const articleType = defineType({
       group: 'settings',
       initialValue: false,
     }),
+
+defineField({
+  name: 'seoTitle',
+  title: 'SEO Title',
+  description: 'Optional alternative title for search engines. Falls back to Article Title.',
+  type: 'string',
+  group: 'settings',
+  validation: (Rule) => Rule.max(60),
+}),
+
+defineField({
+  name: 'seoDescription',
+  title: 'SEO Description',
+  description: 'Search engine description. Falls back to Subtitle.',
+  type: 'text',
+  rows: 3,
+  group: 'settings',
+  validation: (Rule) => Rule.max(160),
+}),
+
+defineField({
+  name: 'socialImage',
+  title: 'Social Sharing Image',
+  description: 'Optional image for social sharing. Falls back to Hero Image.',
+  type: 'image',
+  group: 'media',
+  options: {
+    hotspot: true,
+  },
+}),
+
+defineField({
+  name: 'noIndex',
+  title: 'Hide from Search Engines',
+  description: 'Prevent search engines from indexing this article.',
+  type: 'boolean',
+  group: 'settings',
+  initialValue: false,
+}),
+
+
   ],
 })
 
+
+
+
 export const schemaTypes = [
   articleType,
+  authorType,
   articleImageType,
   articleCalloutType,
   articleYoutubeType,
-
-]
+];

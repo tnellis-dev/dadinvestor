@@ -2,26 +2,120 @@
 // src/layouts/BaseLayout.astro
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import '../styles/global.css'; // <-- MAKE SURE THIS IMPORT IS HERE
+import '../styles/global.css';
+
+
 
 interface Props {
   title: string;
   description?: string;
+  canonicalURL?: string;
+  image?: string;
+  imageAlt?: string;
+  noIndex?: boolean;
+  type?: 'website' | 'article';
 }
 
-const { title, description = "Independent Australian wealth building tools and guides." } = Astro.props;
+const {
+  title,
+  description = "Independent Australian wealth building tools and guides.",
+  canonicalURL,
+  image,
+  imageAlt,
+  noIndex = false,
+  type = 'website',
+} = Astro.props;
+
+// Use the production site URL configured in astro.config.mjs.
+// The fallback keeps local development usable.
+const siteURL = Astro.site ?? new URL('https://www.dadinvestor.com.au');
+
+const canonical = canonicalURL
+  ? new URL(canonicalURL, siteURL).href
+  : new URL(Astro.url.pathname, siteURL).href;
+
+const absoluteImage = image
+  ? new URL(image, siteURL).href
+  : undefined;
+
+const pageTitle = `${title} | DadInvestor`;
+
+
+const siteStructuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': 'https://www.dadinvestor.com.au/#organization',
+      name: 'DadInvestor',
+      url: 'https://www.dadinvestor.com.au/',
+    },
+    {
+      '@type': 'WebSite',
+      '@id': 'https://www.dadinvestor.com.au/#website',
+      name: 'DadInvestor',
+      url: 'https://www.dadinvestor.com.au/',
+      publisher: {
+        '@id': 'https://www.dadinvestor.com.au/#organization',
+      },
+      inLanguage: 'en-AU',
+    },
+  ],
+};
 ---
 
-<html lang="en" class="scroll-smooth">
+<html lang="en-AU" class="scroll-smooth">
+  
   <head>
+    <script
+  type="application/ld+json"
+  set:html={JSON.stringify(siteStructuredData)}
+/>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{title} | DadInvestor</title>
-    <meta name="description" content={description} />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  </head>
-  <body class="bg-[#F8FAFC] text-slate-900 font-sans antialiased min-h-screen flex flex-col">
     
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    {noIndex && (
+      <meta name="robots" content="noindex, nofollow" />
+    )}
+
+    <!-- Open Graph -->
+    <meta property="og:type" content={type} />
+    <meta property="og:site_name" content="DadInvestor" />
+    <meta property="og:locale" content="en_AU" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+
+    {absoluteImage && (
+      <>
+        <meta property="og:image" content={absoluteImage} />
+        {imageAlt && (
+          <meta property="og:image:alt" content={imageAlt} />
+        )}
+      </>
+    )}
+
+    <!-- Twitter / X -->
+    <meta
+      name="twitter:card"
+      content={absoluteImage ? 'summary_large_image' : 'summary'}
+    />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+
+    {absoluteImage && (
+      <meta name="twitter:image" content={absoluteImage} />
+    )}
+  </head>
+
+  <body class="bg-[#F8FAFC] text-slate-900 font-sans antialiased min-h-screen flex flex-col">
     <Header />
 
     <div class="flex-grow">
@@ -29,6 +123,5 @@ const { title, description = "Independent Australian wealth building tools and g
     </div>
 
     <Footer />
-
   </body>
 </html>

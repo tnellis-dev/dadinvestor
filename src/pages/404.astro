@@ -1,0 +1,44 @@
+
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Page Not Found | DadInvestor"
+  description="Sorry, we couldn't find the page you're looking for."
+>
+  <main class="min-h-[70vh] bg-[#F8FAFC] flex items-center justify-center px-4 py-20">
+    <div class="max-w-2xl text-center space-y-6">
+
+      <p class="text-sm font-bold uppercase tracking-widest text-[#10B981]">
+        Error 404
+      </p>
+
+      <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight text-[#0F291E]">
+        Lost your way?
+      </h1>
+
+      <p class="text-lg text-slate-600 leading-relaxed max-w-xl mx-auto">
+        Looks like this page doesn't exist anymore, or perhaps the link was incorrect.
+        Don't worry — there's plenty more to explore.
+      </p>
+
+      <div class="flex flex-col sm:flex-row justify-center gap-4 pt-4">
+        <a
+          href="/"
+          class="inline-flex justify-center items-center px-6 py-3 rounded-xl bg-[#10B981] text-[#0F291E] font-bold hover:bg-emerald-400 transition"
+        >
+          Back to homepage
+        </a>
+
+        <a
+          href="/etfs-investing/"
+          class="inline-flex justify-center items-center px-6 py-3 rounded-xl border border-slate-300 text-[#0F291E] font-semibold hover:border-[#10B981] transition"
+        >
+          Explore investing guides
+        </a>
+      </div>
+
+    </div>
+  </main>
+</BaseLayout>

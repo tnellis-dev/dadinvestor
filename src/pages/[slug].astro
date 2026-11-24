@@ -7,6 +7,7 @@ import { Image } from 'astro:assets';
 import ArticleImage from '../components/ArticleImage.astro';
 import ArticleCallout from '../components/ArticleCallout.astro';
 import ArticleYoutube from '../components/ArticleYoutube.astro';
+import AuthorBio from '../components/AuthorBio.astro';
 
 
 export async function getStaticPaths() {
@@ -35,13 +36,29 @@ const article = await sanityClient.fetch(
     subtitle,
     category,
     author,
-    updatedDate,
+"authorProfile": authorProfile->{
+  name,
+  bio,
+  website,
+  sameAs,
+  "slug": slug.current,
+  "imageUrl": image.asset->url
+},
+publishedAt,
+    "dateModified": coalesce(dateModified, updatedDate),
+    seoTitle,
+    seoDescription,
+    noIndex,
     readTimeMinutes,
     keyTakeaways,
     body,
     disclaimer,
     "imageUrl": heroImage.asset->url,
-    heroImageAlt
+    heroImageAlt,
+    "socialImageUrl": coalesce(
+      socialImage.asset->url,
+      heroImage.asset->url
+    )
   }`,
   { slug }
 );
@@ -61,9 +78,61 @@ const portableTextComponents = {
 
   },
 };
+
+const articleUrl = new URL(
+  Astro.url.pathname,
+  Astro.site
+).href;
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  '@id': `${articleUrl}#article`,
+  headline: article.title,
+  description: article.seoDescription || article.subtitle,
+  image: article.socialImageUrl
+    ? [article.socialImageUrl]
+    : undefined,
+  datePublished: article.publishedAt,
+  dateModified: article.dateModified || undefined,
+  author: article.authorProfile
+  ? {
+      '@type': 'Person',
+      '@id': `https://www.dadinvestor.com.au/authors/${article.authorProfile.slug}/#person`,
+      name: article.authorProfile.name,
+      url: article.authorProfile.website,
+      image: article.authorProfile.imageUrl,
+      sameAs: article.authorProfile.sameAs,
+    }
+  : {
+      '@type': 'Organization',
+      name: article.author || 'DadInvestor Team',
+    },
+  publisher: {
+  '@id': 'https://www.dadinvestor.com.au/#organization',
+},
+  mainEntityOfPage: {
+    '@type': 'WebPage',
+    '@id': articleUrl,
+  },
+  articleSection: article.category,
+  inLanguage: 'en-AU',
+};
 ---
 
-<BaseLayout title={article.title} description={article.subtitle}>
+<BaseLayout
+  title={article.seoTitle || article.title}
+  description={article.seoDescription || article.subtitle}
+  image={article.socialImageUrl}
+  imageAlt={article.heroImageAlt || article.title}
+  noIndex={article.noIndex}
+  type="article"
+>
+
+ <script
+    type="application/ld+json"
+    set:html={JSON.stringify(structuredData)}
+  />
 
   <!-- Article Header -->
   <header class="bg-[#0F291E] text-white py-16 px-4 border-b border-emerald-900/50">
@@ -152,6 +221,10 @@ const portableTextComponents = {
             {article.disclaimer}
           </div>
         )}
+        
+        {article.authorProfile && (
+  <AuthorBio author={article.authorProfile} />
+)}
 
       </div>
 

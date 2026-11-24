@@ -1,0 +1,54 @@
+
+---
+interface Props {
+  author: {
+    name?: string;
+    bio?: string;
+    website?: string;
+    imageUrl?: string;
+    sameAs?: string[];
+    slug?: string;
+  };
+}
+
+const { author } = Astro.props;
+---
+
+{author && (
+  <section class="bg-white rounded-2xl border border-slate-200 p-6 md:p-8">
+    <div class="flex flex-col sm:flex-row gap-6 items-start">
+
+      {author.imageUrl && (
+        <img
+          src={author.imageUrl}
+          alt={author.name || 'Article author'}
+          width="120"
+          height="120"
+          loading="lazy"
+          class="w-24 h-24 rounded-full object-cover shrink-0"
+        />
+      )}
+
+      <div>
+        <p class="text-sm text-slate-500 uppercase tracking-wider font-semibold mb-1">
+          Written by
+        </p>
+
+        <h2 class="text-xl font-bold text-[#0F291E] mb-3">
+          {author.website ? (
+            <a href={author.website} class="hover:underline">
+              {author.name}
+            </a>
+          ) : author.name}
+        </h2>
+
+        {author.bio && (
+          <p class="text-slate-600 leading-relaxed">
+            {author.bio}
+          </p>
+        )}
+      </div>
+
+    </div>
+  </section>
+)}
