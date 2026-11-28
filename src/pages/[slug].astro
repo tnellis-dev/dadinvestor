@@ -135,49 +135,44 @@ const structuredData = {
   />
 
   <!-- Article Header -->
-  <header class="bg-[#0F291E] text-white py-16 px-4 border-b border-emerald-900/50">
-<div class="max-w-6xl mx-auto">
-  <div class="lg:w-[calc(100%-352px)] space-y-4">
-          <div class="flex items-center gap-3">
-        {article.category && (
-          <span class="bg-[#10B981]/20 text-[#10B981] font-semibold text-xs uppercase tracking-wider px-3 py-1 rounded-full border border-[#10B981]/30">
-            {article.category}
-          </span>
-        )}
+ 
 
-        {article.readTimeMinutes && (
-          <span class="text-slate-400 text-sm">
-            • {article.readTimeMinutes} min read
-          </span>
-        )}
-      </div>
+<!-- Article Header -->
+<header class="article-header">
+  <div class="article-header-inner">
 
-      <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight leading-tight text-white">
-        {article.title}
-      </h1>
+    {article.category && (
+      <p class="article-category">{article.category}</p>
+    )}
 
-      {article.subtitle && (
-        <p class="text-lg text-slate-300">
-          {article.subtitle}
-        </p>
-      )}
+    <h1>{article.title}</h1>
 
-    </div>
+    {article.subtitle && (
+      <p class="article-subtitle">{article.subtitle}</p>
+    )}
+
+    {article.readTimeMinutes && (
+      <p class="article-reading-time">
+        {article.readTimeMinutes} min read
+      </p>
+    )}
+
   </div>
-  </header>
+</header>
+
+
 
 
   <!-- Article Content + Sidebar -->
-  <main class="bg-[#F8FAFC] py-12 px-4">
-
+<main class="article-main">
     <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_320px] gap-8 lg:items-start">
 
       <!-- Main Article Column -->
       <div class="space-y-8">
 
         {article.imageUrl && (
-          <div class="rounded-2xl overflow-hidden border border-slate-200 shadow-sm bg-white aspect-[16/9]">
-            <Image
+<div class="article-featured-image">          
+    <Image
               src={article.imageUrl}
               alt={article.heroImageAlt || article.title}
               width={1200}
@@ -190,7 +185,7 @@ const structuredData = {
         )}
 
         {article.keyTakeaways?.filter((takeaway: string) => takeaway.trim()).length > 0 && (
-          <div class="bg-white rounded-2xl border border-slate-200 p-8 shadow-sm">
+          <div class="article-takeaways">
 
             <h2 class="text-xl font-bold mb-4">
               Key Takeaways
@@ -240,71 +235,212 @@ const structuredData = {
 
 </BaseLayout>
 
+
 <style>
+  /* Article header */
+
+  .article-header {
+    background: var(--di-cream);
+    padding: 64px 24px 42px;
+  }
+
+  .article-header-inner {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .article-category {
+    color: var(--di-forest);
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 22px;
+  }
+
+  .article-header h1 {
+    font-family: var(--di-font-heading);
+    font-size: clamp(2.8rem, 5.5vw, 4.5rem);
+    line-height: 1.04;
+    letter-spacing: -0.045em;
+    font-weight: 600;
+    color: var(--di-ink);
+  }
+
+  .article-subtitle {
+    margin-top: 24px;
+    max-width: 780px;
+    font-size: 23px;
+    line-height: 1.5;
+    color: var(--di-body);
+  }
+
+  .article-reading-time {
+    margin-top: 22px;
+    font-size: 20px;
+    color: var(--di-muted);
+  }
+
+  /* Main layout */
+
+  .article-main {
+    background: var(--di-cream);
+    padding: 24px 24px 80px;
+  }
+
+  .article-main > div {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .article-featured-image {
+    overflow: hidden;
+    border-radius: 8px;
+    background: var(--di-highlight);
+    aspect-ratio: 16 / 9;
+  }
+
+  .article-featured-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Key takeaways */
+
+  .article-takeaways {
+    background: var(--di-paper);
+    padding: 30px;
+    border-radius: 8px;
+    margin-top: 36px;
+  }
+
+  .article-takeaways h2 {
+    font-family: var(--di-font-heading);
+    font-size: 30px;
+    margin-bottom: 20px;
+  }
+
+  .article-takeaways ul {
+    padding-left: 26px;
+    list-style: disc;
+  }
+
+  .article-takeaways li {
+    font-size: 20px;
+    line-height: 1.6;
+    margin-bottom: 12px;
+  }
+
+  /* Article body */
+
+  .article-content-panel {
+    background: var(--di-paper);
+    padding: 40px;
+    border-radius: 8px;
+    margin-top: 36px;
+  }
+
   .article-body {
-  font-family: 'Work Sans', sans-serif;
-  font-size: 18px;
-  line-height: 1.65;
-  color: #334155;
-}
+    max-width: 760px;
+    margin: 0 auto;
+    font-family: var(--di-font-body);
+    font-size: 20px;
+    line-height: 1.75;
+    color: var(--di-body);
+  }
 
-.article-body :global(p) {
-  margin: 0 0 2rem;
-}
+  .article-body :global(p) {
+    margin: 0 0 1.8rem;
+  }
 
-.article-body :global(h2) {
-  font-family: 'Poppins', sans-serif;
-  font-size: 30px;
-  line-height: 1.4em;
-  font-weight: 700;
-  color: #0F291E;
-  margin: 3rem 0;
-  letter-spacing: -0.06px;
-}
+  .article-body :global(h2) {
+    font-family: var(--di-font-heading);
+    font-size: 36px;
+    line-height: 1.15;
+    font-weight: 600;
+    color: var(--di-ink);
+    margin: 3rem 0 1.2rem;
+    letter-spacing: -0.035em;
+  }
 
-.article-body :global(h3) {
-  font-family: 'Poppins', sans-serif;
-  font-size: 26px;
-  line-height: 1.4em;
-  font-weight: 700;
-  color: #0F291E;
-  margin: 2.5rem 0 0.9rem;
-  letter-spacing: -0.06px;
-}
+  .article-body :global(h3) {
+    font-family: var(--di-font-heading);
+    font-size: 30px;
+    line-height: 1.2;
+    font-weight: 600;
+    color: var(--di-ink);
+    margin: 2.5rem 0 1rem;
+    letter-spacing: -0.025em;
+  }
 
-.article-body :global(h4) {
-  font-family: 'Poppins', sans-serif;
-  font-size: 22x;
-  line-height: 1.4em;
-  font-weight: 700;
-  color: #0F291E;
-  letter-spacing: -0.06px;
-}
+  .article-body :global(h4) {
+    font-family: var(--di-font-heading);
+    font-size: 24px;
+    line-height: 1.3;
+    font-weight: 600;
+    color: var(--di-ink);
+    margin: 2rem 0 1rem;
+  }
 
-.article-body :global(ul) {
-  list-style-type: disc;
-  padding-left: 1.5rem;
-  margin: 0 0 1.5rem;
-}
+  .article-body :global(ul),
+  .article-body :global(ol) {
+    padding-left: 28px;
+    margin: 0 0 1.8rem;
+  }
 
-.article-body :global(ol) {
-  list-style-type: decimal;
-  padding-left: 1.5rem;
-  margin: 0 0 1.5rem;
-}
+  .article-body :global(ul) {
+    list-style: disc;
+  }
 
-.article-body :global(li) {
-  padding-left: 0.25rem;
-  margin-bottom: 0.6rem;
-}
+  .article-body :global(ol) {
+    list-style: decimal;
+  }
 
-.article-body :global(a) {
-  color: #0F291E;
-  font-weight: 600;
-  text-decoration: underline;
-}
+  .article-body :global(li) {
+    padding-left: 5px;
+    margin-bottom: 12px;
+  }
 
-.article-body :global(strong) {
-  font-weight: 700;
-}
+  .article-body :global(a) {
+    color: var(--di-forest);
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .article-body :global(strong) {
+    font-weight: 600;
+    color: var(--di-ink);
+  }
+
+  /* Disclaimer */
+
+  .article-main .text-slate-500 {
+    color: var(--di-muted);
+    font-size: 18px;
+    line-height: 1.6;
+  }
+
+  /* Mobile */
+
+  @media (max-width: 800px) {
+    .article-header {
+      padding: 44px 22px 30px;
+    }
+
+    .article-main {
+      padding: 16px 16px 56px;
+    }
+
+    .article-content-panel {
+      padding: 24px 20px;
+    }
+
+    .article-body {
+      font-size: 19px;
+    }
+
+    .article-body :global(h2) {
+      font-size: 31px;
+    }
+  }
 </style>

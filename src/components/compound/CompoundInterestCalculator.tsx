@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import CompoundInterestChart, { type CompoundPoint } from './components/CompoundInterestChart';
 
@@ -87,173 +88,232 @@ export default function CompoundInterestCalculator() {
     });
   };
 
+  const inputClass =
+    "w-full bg-[#FFFCF6] border border-[#E3D8C8] rounded-xl px-4 py-3 text-[#18251F] text-base font-medium focus:outline-none focus:ring-2 focus:ring-[#164B35]/20 focus:border-[#164B35] transition";
+
+  const labelClass =
+    "block text-base font-semibold text-[#26312B] mb-2";
+
   return (
     <div className="space-y-8">
+
       {/* Input Form */}
-      <div className="bg-white border border-slate-200 rounded-3xl p-6 md:p-8 shadow-sm space-y-6">
-        <h2 className="text-xl font-bold text-[#0F291E] border-b border-slate-100 pb-4">
-          Enter Your Numbers
-        </h2>
+      <div className="bg-[#FFFCF6] border border-[#E3D8C8] rounded-2xl p-6 md:p-8 shadow-sm space-y-7">
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-          <div>
-            <label className="block text-sm font-semibold text-slate-700 mb-2">
-              Initial Deposit ($)
-            </label>
-            <input
-              type="number"
-              value={initialDeposit}
-              onChange={(e) => setInitialDeposit(Number(e.target.value))}
-              className="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 text-slate-900 font-medium focus:outline-none focus:border-[#10B981]"
-            />
-          </div>
+        <div className="border-b border-[#E3D8C8] pb-4">
+          <h2 className="text-2xl font-bold text-[#18251F]">
+            Enter Your Numbers
+          </h2>
+          <p className="text-base text-[#626B64] mt-2">
+            Adjust the figures below to explore how your investments could grow.
+          </p>
+        </div>
 
-          <div>
-            <label className="block text-sm font-semibold text-slate-700 mb-2">
-              Regular Deposit ($)
-            </label>
-            <input
-              type="number"
-              value={regularDeposit}
-              onChange={(e) => setRegularDeposit(Number(e.target.value))}
-              className="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 text-slate-900 font-medium focus:outline-none focus:border-[#10B981]"
-            />
-          </div>
+        {/* Deposit Inputs */}
+        <div className="space-y-4">
+          <h3 className="text-lg font-bold text-[#164B35]">
+            Contributions
+          </h3>
 
-          <div>
-            <label className="block text-sm font-semibold text-slate-700 mb-2">
-              Deposit Frequency
-            </label>
-            <select
-              value={depositFrequency}
-              onChange={(e) => setDepositFrequency(e.target.value)}
-              className="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 text-slate-900 font-medium focus:outline-none focus:border-[#10B981]"
-            >
-              <option value="monthly">Monthly</option>
-              <option value="annually">Annually</option>
-              <option value="daily">Daily</option>
-              <option value="weekly">Weekly</option>
-              <option value="fortnightly">Fortnightly</option>
-            </select>
-          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div>
+              <label className={labelClass}>
+                Initial Deposit ($)
+              </label>
+              <input
+                type="number"
+                value={initialDeposit}
+                onChange={(e) => setInitialDeposit(Number(e.target.value))}
+                className={inputClass}
+              />
+            </div>
 
-          <div>
-            <label className="block text-sm font-semibold text-slate-700 mb-2">
-              Compound Frequency
-            </label>
-            <select
-              value={compoundFrequency}
-              onChange={(e) => setCompoundFrequency(e.target.value)}
-              className="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 text-slate-900 font-medium focus:outline-none focus:border-[#10B981]"
-            >
-              <option value="monthly">Monthly</option>
-              <option value="annually">Annually</option>
-            </select>
+            <div>
+              <label className={labelClass}>
+                Regular Deposit ($)
+              </label>
+              <input
+                type="number"
+                value={regularDeposit}
+                onChange={(e) => setRegularDeposit(Number(e.target.value))}
+                className={inputClass}
+              />
+            </div>
+
+            <div>
+              <label className={labelClass}>
+                Deposit Frequency
+              </label>
+              <select
+                value={depositFrequency}
+                onChange={(e) => setDepositFrequency(e.target.value)}
+                className={inputClass}
+              >
+                <option value="monthly">Monthly</option>
+                <option value="annually">Annually</option>
+                <option value="daily">Daily</option>
+                <option value="weekly">Weekly</option>
+                <option value="fortnightly">Fortnightly</option>
+              </select>
+            </div>
+
+            <div>
+              <label className={labelClass}>
+                Compound Frequency
+              </label>
+              <select
+                value={compoundFrequency}
+                onChange={(e) => setCompoundFrequency(e.target.value)}
+                className={inputClass}
+              >
+                <option value="monthly">Monthly</option>
+                <option value="annually">Annually</option>
+              </select>
+            </div>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-          <div>
-            <label className="block text-sm font-semibold text-slate-700 mb-2">
-              Years (max 50)
-            </label>
-            <input
-              type="number"
-              max={50}
-              value={years}
-              onChange={(e) => setYears(Number(e.target.value))}
-              className="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 text-slate-900 font-medium focus:outline-none focus:border-[#10B981]"
-            />
-          </div>
+        {/* Growth Assumptions */}
+        <div className="space-y-4">
+          <h3 className="text-lg font-bold text-[#164B35]">
+            Growth assumptions
+          </h3>
 
-          <div>
-            <label className="block text-sm font-semibold text-slate-700 mb-2">
-              Annual Return (%)
-            </label>
-            <input
-              type="number"
-              step={0.1}
-              value={interestRate}
-              onChange={(e) => setInterestRate(Number(e.target.value))}
-              className="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 text-slate-900 font-medium focus:outline-none focus:border-[#10B981]"
-            />
-          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            <div>
+              <label className={labelClass}>
+                Years (max 50)
+              </label>
+              <input
+                type="number"
+                max={50}
+                value={years}
+                onChange={(e) => setYears(Number(e.target.value))}
+                className={inputClass}
+              />
+            </div>
 
-          <div>
-            <label className="block text-sm font-semibold text-slate-700 mb-2">
-              Variance (+/- %)
-            </label>
-            <input
-              type="number"
-              step={0.1}
-              value={variance}
-              onChange={(e) => setVariance(Number(e.target.value))}
-              className="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 text-slate-900 font-medium focus:outline-none focus:border-[#10B981]"
-            />
+            <div>
+              <label className={labelClass}>
+                Annual Return (%)
+              </label>
+              <input
+                type="number"
+                step={0.1}
+                value={interestRate}
+                onChange={(e) => setInterestRate(Number(e.target.value))}
+                className={inputClass}
+              />
+            </div>
+
+            <div>
+              <label className={labelClass}>
+                Variance (+/- %)
+              </label>
+              <input
+                type="number"
+                step={0.1}
+                value={variance}
+                onChange={(e) => setVariance(Number(e.target.value))}
+                className={inputClass}
+              />
+            </div>
           </div>
         </div>
 
         <button
           type="button"
           onClick={handleCalculate}
-          className="w-full bg-[#10B981] hover:bg-emerald-600 text-[#0F291E] font-bold py-4 rounded-xl transition shadow-sm text-center block mt-6 text-base cursor-pointer"
+          className="w-full bg-[#164B35] hover:bg-[#103B2A] !text-[#FFFCF6] font-bold py-4 rounded-xl transition shadow-sm text-lg cursor-pointer"
         >
-          Calculate Growth
+          Calculate Growth →
         </button>
       </div>
 
-      {/* Output Results (Revealed on Button Click) */}
+      {/* Output Results */}
       {results && (
         <div className="space-y-6">
-          <div className="bg-[#0F291E] text-white rounded-3xl p-6 sm:p-8 shadow-xl space-y-6">
+
+          {/* Projected Outcome */}
+          <div className="bg-[#103B2A] text-white rounded-2xl p-6 sm:p-8 shadow-sm space-y-7">
+
             <div>
-              <span className="text-xs uppercase font-bold tracking-wider text-[#10B981]">
-                PROJECTED OUTCOME
+              <span className="text-sm uppercase font-bold tracking-wider text-[#D5E2D8]">
+                Projected outcome
               </span>
-              <div className="text-4xl sm:text-5xl font-black text-white mt-1 font-mono">
+
+              <div className="text-4xl sm:text-5xl font-bold !text-[#FFFCF6] mt-2 tabular-nums">
                 {fmtMoney(results.finalTotal)}
               </div>
-              <p className="text-slate-300 text-sm mt-1">
+
+              <p className="text-base text-[#E1E8E2] mt-2">
                 Projected portfolio value in {results.calculatedYears} years based on your inputs.
               </p>
             </div>
 
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-2">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-5 pt-5 border-t border-white/20">
+
               <div>
-                <span className="block text-xs text-slate-400 font-medium">Initial Principal</span>
-                <span className="text-base sm:text-xl font-bold text-white font-mono mt-0.5 block">
+                <span className="block text-sm text-[#D5E2D8] font-medium">
+                  Initial Principal
+                </span>
+                <span className="text-lg sm:text-xl font-bold !text-[#FFFCF6] mt-1 block tabular-nums">
                   {fmtMoney(initialDeposit)}
                 </span>
               </div>
+
               <div>
-                <span className="block text-xs text-slate-400 font-medium">Total Deposits</span>
-                <span className="text-base sm:text-xl font-bold text-white font-mono mt-0.5 block">
+                <span className="block text-sm text-[#D5E2D8] font-medium">
+                  Total Deposits
+                </span>
+                <span className="text-lg sm:text-xl font-bold !text-[#FFFCF6] mt-1 block tabular-nums">
                   {fmtMoney(results.totalDeposits)}
                 </span>
               </div>
+
               <div>
-                <span className="block text-xs text-slate-400 font-medium">Interest Earned</span>
-                <span className="text-base sm:text-xl font-bold text-[#10B981] font-mono mt-0.5 block">
+                <span className="block text-sm text-[#D5E2D8] font-medium">
+                  Interest Earned
+                </span>
+                <span className="text-lg sm:text-xl font-bold !text-[#D5E2D8] mt-1 block tabular-nums">
                   {fmtMoney(results.totalInterest)}
                 </span>
               </div>
+
               <div>
-                <span className="block text-xs text-slate-400 font-medium">Variance Range</span>
-                <span className="text-xs sm:text-sm font-bold text-slate-200 font-mono mt-1 block">
-                  {fmtMoney(results.finalLow)} - {fmtMoney(results.finalHigh)}
+                <span className="block text-sm text-[#D5E2D8] font-medium">
+                  Variance Range
+                </span>
+                <span className="text-sm sm:text-base font-bold !text-[#FFFCF6] mt-2 block tabular-nums">
+                  {fmtMoney(results.finalLow)} – {fmtMoney(results.finalHigh)}
                 </span>
               </div>
+
             </div>
           </div>
 
-          <div className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-sm space-y-4">
-            <h3 className="text-lg font-bold text-[#0F291E]">Portfolio Growth Over Time</h3>
+          {/* Growth Chart */}
+          <div className="bg-[#FFFCF6] border border-[#E3D8C8] rounded-2xl p-6 sm:p-8 shadow-sm space-y-5">
+
+            <div>
+              <h3 className="text-2xl font-bold text-[#18251F]">
+                Portfolio Growth Over Time
+              </h3>
+              <p className="text-base text-[#626B64] mt-2">
+                See how your projected balance changes year by year.
+              </p>
+            </div>
+
             <CompoundInterestChart data={results.chartData} />
-            <div className="flex flex-col sm:flex-row items-center justify-between pt-4 border-t border-slate-100 gap-2 text-xs text-slate-400">
+
+            <div className="flex flex-col sm:flex-row items-center justify-between pt-4 border-t border-[#E3D8C8] gap-2 text-sm text-[#626B64]">
               <span>Estimates only. Assumes compounding returns over time.</span>
-              <span className="font-semibold text-slate-600">DadInvestor Framework</span>
+              <span className="font-semibold text-[#164B35]">
+                DadInvestor Framework
+              </span>
             </div>
           </div>
+
         </div>
       )}
     </div>

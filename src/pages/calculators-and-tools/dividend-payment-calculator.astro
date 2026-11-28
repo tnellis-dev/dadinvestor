@@ -1,83 +1,80 @@
-
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
 const toolDetails = {
-  title: 'Dividend Calculator Australia',
+  title: 'Dividend Payment Calculator Australia',
   category: 'Income & Shares',
   description: 'Calculate your ASX share and ETF dividend income. Estimate annual dividends, payment amounts and dividend yields with our free Australian dividend calculator.',
 };
 ---
 
 <BaseLayout
-  title="Dividend Calculator Australia | ASX Dividend & Yield Calculator - Dad Investor"
+  title="Dividend Payment Calculator Australia | ASX Dividend & Yield Calculator - Dad Investor"
   description={toolDetails.description}
 >
-  <!-- Header Banner -->
-  <header class="bg-[#0F291E] text-white py-12 px-4 border-b border-emerald-900/55">
-    <div class="max-w-7xl mx-auto space-y-3">
+  <header class="bg-[#164B35] text-white py-12 px-4">
+    <div class="max-w-[1168px] mx-auto space-y-4">
       <div class="flex items-center gap-3">
-        <span class="bg-[#10B981]/20 text-[#10B981] font-semibold text-xs uppercase tracking-wider px-3 py-1 rounded-full border border-[#10B981]/30">
+        <span class="bg-white/10 text-[#FFFCF6] font-semibold text-xs uppercase tracking-wider px-3 py-1 rounded-full border border-white/20">
           {toolDetails.category}
         </span>
       </div>
 
-      <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight leading-tight text-white max-w-4xl">
+      <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight leading-tight !text-[#FFFCF6] max-w-4xl">
         {toolDetails.title}
       </h1>
 
-      <p class="text-base text-slate-300 leading-relaxed max-w-3xl">
+      <p class="text-base !text-[#E5EDE7] leading-relaxed max-w-3xl">
         {toolDetails.description}
       </p>
     </div>
   </header>
 
-  <!-- Main Content -->
-  <main class="bg-[#F8FAFC] py-16 px-4">
-    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+  <main class="bg-[#F8F3EA] py-12 md:py-16 px-4">
+    <div class="max-w-[1168px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
 
-      <!-- Left Column -->
-      <div class="lg:col-span-8 space-y-8">
+      <div class="lg:col-span-8 space-y-10">
 
-        <!-- Introduction -->
-        <div class="prose prose-slate max-w-none space-y-4">
-          <p class="text-slate-700 leading-relaxed text-base sm:text-lg">
+        <div class="space-y-5">
+          <p class="text-[#26312B] leading-relaxed text-lg">
             Want to know how much income your shares could generate?
             Use this free Australian dividend calculator to estimate
             the dividend income from your ASX shares and ETFs.
           </p>
 
-          <p class="text-slate-600 text-base leading-relaxed">
+          <p class="text-[#626B64] leading-relaxed">
             Enter your number of shares, share price and dividend yield
             to calculate your expected annual dividend income. You can
             also select your payment frequency to estimate your average
             dividend payout throughout the year.
           </p>
 
-          <p class="text-slate-600 text-sm leading-relaxed">
+          <p class="text-[#626B64] leading-relaxed">
             Whether you're comparing dividend-paying shares, building
             an income portfolio or working towards financial independence,
             this calculator gives you a starting point for understanding
             what your investments could generate.
           </p>
 
-          <p class="text-slate-600 text-sm leading-relaxed">
+          <p class="text-[#626B64] text-sm leading-relaxed">
             Results are estimates in Australian dollars, before tax and
             fees. Dividends are not guaranteed and actual payments can vary.
           </p>
         </div>
 
         <!-- Calculator Input Form -->
-        <div class="bg-white border border-slate-200 rounded-3xl p-6 md:p-10 shadow-sm">
-          <h2 class="text-xl font-bold text-[#0F291E] border-b border-slate-100 pb-4 mb-6">
-            Calculate Your Dividend Income
-          </h2>
+        <div class="bg-[#FFFCF6] border border-[#E3D8C8] rounded-2xl p-6 md:p-8 space-y-6">
+          <div class="border-b border-[#E3D8C8] pb-4">
+            <h2 class="text-xl font-bold !text-[#18251F]">
+              Calculate Your Dividend Income
+            </h2>
+          </div>
 
           <form id="dividend-calculator" class="space-y-6">
 
             <div>
-              <label for="shares" class="block text-sm font-semibold text-slate-700 mb-2">
-                Number of Shares:
+              <label for="shares" class="block text-sm font-semibold text-[#26312B] mb-2">
+                Number of Shares
               </label>
               <input
                 type="number"
@@ -85,13 +82,13 @@ const toolDetails = {
                 value="1000"
                 min="0"
                 required
-                class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 text-slate-900 font-medium focus:outline-none focus:border-[#10B981]"
-              >
+                class="w-full bg-[#F8F3EA] border border-[#D8CCBB] rounded-xl px-4 py-3 text-[#18251F] font-medium focus:outline-none focus:border-[#164B35] focus:ring-2 focus:ring-[#164B35]/10"
+              />
             </div>
 
             <div>
-              <label for="price" class="block text-sm font-semibold text-slate-700 mb-2">
-                Share Price ($):
+              <label for="price" class="block text-sm font-semibold text-[#26312B] mb-2">
+                Share Price ($)
               </label>
               <input
                 type="number"
@@ -100,13 +97,13 @@ const toolDetails = {
                 value="30.00"
                 min="0"
                 required
-                class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 text-slate-900 font-medium focus:outline-none focus:border-[#10B981]"
-              >
+                class="w-full bg-[#F8F3EA] border border-[#D8CCBB] rounded-xl px-4 py-3 text-[#18251F] font-medium focus:outline-none focus:border-[#164B35] focus:ring-2 focus:ring-[#164B35]/10"
+              />
             </div>
 
             <div>
-              <label for="yield" class="block text-sm font-semibold text-slate-700 mb-2">
-                Dividend Yield (%):
+              <label for="yield" class="block text-sm font-semibold text-[#26312B] mb-2">
+                Dividend Yield (%)
               </label>
               <input
                 type="number"
@@ -115,18 +112,18 @@ const toolDetails = {
                 value="4.5"
                 min="0"
                 required
-                class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 text-slate-900 font-medium focus:outline-none focus:border-[#10B981]"
-              >
+                class="w-full bg-[#F8F3EA] border border-[#D8CCBB] rounded-xl px-4 py-3 text-[#18251F] font-medium focus:outline-none focus:border-[#164B35] focus:ring-2 focus:ring-[#164B35]/10"
+              />
             </div>
 
             <div>
-              <label for="frequency" class="block text-sm font-semibold text-slate-700 mb-2">
-                Dividend Payment Frequency:
+              <label for="frequency" class="block text-sm font-semibold text-[#26312B] mb-2">
+                Dividend Payment Frequency
               </label>
               <select
                 id="frequency"
                 required
-                class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 text-slate-900 font-medium focus:outline-none focus:border-[#10B981]"
+                class="w-full bg-[#F8F3EA] border border-[#D8CCBB] rounded-xl px-4 py-3 text-[#18251F] font-medium focus:outline-none focus:border-[#164B35] focus:ring-2 focus:ring-[#164B35]/10"
               >
                 <option value="4">Quarterly (4 times a year)</option>
                 <option value="2">Semi-Annually (2 times a year)</option>
@@ -136,7 +133,7 @@ const toolDetails = {
 
             <button
               type="submit"
-              class="w-full bg-[#10B981] hover:bg-emerald-600 text-[#0F291E] font-bold py-4 rounded-xl transition shadow-sm text-center block cursor-pointer"
+              class="w-full bg-[#164B35] hover:bg-[#103B2A] !text-[#FFFCF6] font-semibold py-4 rounded-xl transition text-center block cursor-pointer"
             >
               Calculate Dividend Payment
             </button>
@@ -145,36 +142,36 @@ const toolDetails = {
         </div>
 
         <!-- Results -->
-        <div class="bg-[#0F291E] text-white rounded-3xl p-8 shadow-xl space-y-6">
+        <div class="bg-[#164B35] !text-[#FFFCF6] rounded-2xl p-6 md:p-8 space-y-6">
 
-          <span class="text-xs uppercase tracking-wider text-[#10B981] font-bold">
+          <span class="text-xs uppercase tracking-wider text-[#D5E4D9] font-semibold">
             Projected Outcome
           </span>
 
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
 
-            <div class="bg-emerald-950/40 border border-emerald-500/20 rounded-2xl p-5">
-              <span class="text-xs text-slate-300 uppercase tracking-wider font-medium">
+            <div class="bg-[#103B2A] border border-white/15 rounded-xl p-5 space-y-2">
+              <span class="text-xs text-[#D5E4D9] uppercase tracking-wider font-medium">
                 Estimated Annual Dividend Income
               </span>
-              <div id="annual-result" class="text-3xl font-black text-white font-mono mt-2">
+              <div id="annual-result" class="text-3xl font-bold !text-[#FFFCF6] mt-2">
                 $1,350.00
               </div>
             </div>
 
-            <div class="bg-emerald-950/40 border border-emerald-500/20 rounded-2xl p-5">
-              <span class="text-xs text-slate-300 uppercase tracking-wider font-medium">
+            <div class="bg-[#103B2A] border border-white/15 rounded-xl p-5 space-y-2">
+              <span class="text-xs text-[#D5E4D9] uppercase tracking-wider font-medium">
                 Average Dividend Per Payment
               </span>
-              <div id="per-period-result" class="text-3xl font-black text-[#10B981] font-mono mt-2">
+              <div id="per-period-result" class="text-3xl font-bold !text-[#E4CBA5] mt-2">
                 $337.50
               </div>
             </div>
 
           </div>
 
-          <p id="frequency-label" class="text-xs text-slate-300 leading-relaxed pt-2 border-t border-emerald-900/60">
-            Paid out <span class="text-white font-semibold">quarterly</span>,
+          <p id="frequency-label" class="text-sm !text-[#E5EDE7] leading-relaxed pt-4 border-t border-white/15">
+            Paid out <span class="!text-[#FFFCF6] font-semibold">quarterly</span>,
             resulting in 4 distributions per year. The per-payment figure is
             a mathematical average, not a guarantee of the amount or timing
             of individual distributions.
@@ -183,35 +180,35 @@ const toolDetails = {
         </div>
 
         <!-- Dividend Yield Explanation -->
-        <section class="bg-white border border-slate-200 rounded-2xl p-6 md:p-8 space-y-4">
+        <section class="bg-[#FFFCF6] border border-[#E3D8C8] rounded-2xl p-6 md:p-8 space-y-5">
 
-          <h2 class="text-2xl font-bold text-[#0F291E]">
+          <h2 class="text-2xl font-bold !text-[#18251F]">
             How to Calculate Dividend Yield
           </h2>
 
-          <p class="text-slate-600 leading-relaxed">
+          <p class="text-[#626B64] leading-relaxed">
             Dividend yield tells you how much a company pays in annual
             dividends relative to its current share price. It's usually
             expressed as a percentage and helps investors compare the
             income potential of different shares.
           </p>
 
-          <div class="bg-slate-50 rounded-xl p-5 space-y-3">
-            <p class="font-semibold text-[#0F291E]">
+          <div class="bg-[#F8F3EA] rounded-xl p-5 space-y-3">
+            <p class="font-semibold text-[#18251F]">
               Dividend Yield Formula
             </p>
 
-            <p class="text-lg font-bold text-center text-[#0F291E]">
+            <p class="text-lg font-bold text-center text-[#164B35]">
               Annual Dividend Per Share ÷ Share Price × 100
             </p>
           </div>
 
-          <p class="text-slate-600 leading-relaxed">
+          <p class="text-[#626B64] leading-relaxed">
             For example, if a share pays $2 in annual dividends and
             trades at $50, its dividend yield is 4%.
           </p>
 
-          <p class="text-slate-600 leading-relaxed">
+          <p class="text-[#626B64] leading-relaxed">
             Remember that dividend yield changes as share prices and
             dividend payments change. A higher yield isn't necessarily
             better, particularly when it reflects a falling share price
@@ -224,23 +221,23 @@ const toolDetails = {
         <section class="space-y-6">
 
           <div>
-            <h2 class="text-2xl font-bold text-[#0F291E]">
+            <h2 class="text-2xl font-bold !text-[#18251F]">
               Understanding Dividend Payments
             </h2>
 
-            <p class="text-slate-600 leading-relaxed mt-2">
+            <p class="text-[#626B64] leading-relaxed mt-2">
               A few common questions about dividend income, payment
               calculations and what you can expect from your investments.
             </p>
           </div>
 
-          <div class="space-y-6">
+          <div class="space-y-7">
 
             <div>
-              <h3 class="text-lg font-bold text-[#0F291E] mb-2">
+              <h3 class="text-lg font-bold !text-[#18251F] mb-2">
                 How do I calculate my dividend payout?
               </h3>
-              <p class="text-slate-600 leading-relaxed">
+              <p class="text-[#626B64] leading-relaxed">
                 To calculate your dividend payout, multiply the share
                 price by the dividend yield to find the annual dividend
                 per share. Multiply this amount by the number of shares
@@ -251,10 +248,10 @@ const toolDetails = {
             </div>
 
             <div>
-              <h3 class="text-lg font-bold text-[#0F291E] mb-2">
+              <h3 class="text-lg font-bold !text-[#18251F] mb-2">
                 How much does a 4% dividend yield pay?
               </h3>
-              <p class="text-slate-600 leading-relaxed">
+              <p class="text-[#626B64] leading-relaxed">
                 A 4% dividend yield means you could receive approximately
                 $4 in annual dividends for every $100 invested, assuming
                 the yield remains unchanged. For example, a $10,000
@@ -264,10 +261,10 @@ const toolDetails = {
             </div>
 
             <div>
-              <h3 class="text-lg font-bold text-[#0F291E] mb-2">
+              <h3 class="text-lg font-bold !text-[#18251F] mb-2">
                 How much do I need invested to earn $100 a month in dividends?
               </h3>
-              <p class="text-slate-600 leading-relaxed">
+              <p class="text-[#626B64] leading-relaxed">
                 To generate $100 per month, you need $1,200 in annual
                 dividend income. At a 4% dividend yield, you would need
                 an investment portfolio worth approximately $30,000.
@@ -277,10 +274,10 @@ const toolDetails = {
             </div>
 
             <div>
-              <h3 class="text-lg font-bold text-[#0F291E] mb-2">
+              <h3 class="text-lg font-bold !text-[#18251F] mb-2">
                 How much do I need invested to earn $1,000 a month in dividends?
               </h3>
-              <p class="text-slate-600 leading-relaxed">
+              <p class="text-[#626B64] leading-relaxed">
                 To earn $1,000 per month, you need $12,000 in annual
                 dividend income. At a 4% dividend yield, this would
                 require an investment portfolio of approximately
@@ -290,10 +287,10 @@ const toolDetails = {
             </div>
 
             <div>
-              <h3 class="text-lg font-bold text-[#0F291E] mb-2">
+              <h3 class="text-lg font-bold !text-[#18251F] mb-2">
                 What is a good dividend yield?
               </h3>
-              <p class="text-slate-600 leading-relaxed">
+              <p class="text-[#626B64] leading-relaxed">
                 There is no single ideal dividend yield. A yield between
                 3% and 6% may be attractive to some income investors,
                 although it depends on the company, industry and market
@@ -313,11 +310,11 @@ const toolDetails = {
         <section class="space-y-5">
 
           <div>
-            <h2 class="text-2xl font-bold text-[#0F291E]">
+            <h2 class="text-2xl font-bold !text-[#18251F]">
               Related Dividend Investing Guides
             </h2>
 
-            <p class="text-slate-600 leading-relaxed mt-2">
+            <p class="text-[#626B64] leading-relaxed mt-2">
               Want to dig a little deeper? These guides explore how
               dividend investing works, how ETFs generate income and
               what it takes to build an income-producing portfolio.
@@ -328,64 +325,64 @@ const toolDetails = {
 
             <a
               href="/dividend-investing/"
-              class="bg-white border border-slate-200 rounded-2xl p-5 hover:border-emerald-500 transition group"
+              class="bg-[#FFFCF6] border border-[#E3D8C8] rounded-xl p-5 hover:border-[#164B35] transition group"
             >
-              <h3 class="font-bold text-[#0F291E] group-hover:text-emerald-700 transition">
+              <h3 class="font-bold !text-[#18251F] group-hover:!text-[#164B35] transition">
                 Dividend Investing: A 5-Step Guide
               </h3>
-              <p class="text-sm text-slate-600 mt-2 leading-relaxed">
+              <p class="text-sm text-[#626B64] mt-2 leading-relaxed">
                 New to dividend investing? Start with the basics and
                 learn how to build a portfolio that generates income.
               </p>
-              <span class="inline-block text-sm font-semibold text-emerald-700 mt-4">
+              <span class="inline-block text-sm font-semibold text-[#164B35] mt-4">
                 Read the guide →
               </span>
             </a>
 
             <a
               href="/live-on-etf-dividends/"
-              class="bg-white border border-slate-200 rounded-2xl p-5 hover:border-emerald-500 transition group"
+              class="bg-[#FFFCF6] border border-[#E3D8C8] rounded-xl p-5 hover:border-[#164B35] transition group"
             >
-              <h3 class="font-bold text-[#0F291E] group-hover:text-emerald-700 transition">
+              <h3 class="font-bold !text-[#18251F] group-hover:!text-[#164B35] transition">
                 How to Live Off ETF Dividends in Australia
               </h3>
-              <p class="text-sm text-slate-600 mt-2 leading-relaxed">
+              <p class="text-sm text-[#626B64] mt-2 leading-relaxed">
                 Explore how much you might need invested to generate
                 an income from ETF distributions.
               </p>
-              <span class="inline-block text-sm font-semibold text-emerald-700 mt-4">
+              <span class="inline-block text-sm font-semibold text-[#164B35] mt-4">
                 Read the guide →
               </span>
             </a>
 
             <a
               href="/when-do-we-get-to-live-off-dividends/"
-              class="bg-white border border-slate-200 rounded-2xl p-5 hover:border-emerald-500 transition group"
+              class="bg-[#FFFCF6] border border-[#E3D8C8] rounded-xl p-5 hover:border-[#164B35] transition group"
             >
-              <h3 class="font-bold text-[#0F291E] group-hover:text-emerald-700 transition">
+              <h3 class="font-bold !text-[#18251F] group-hover:!text-[#164B35] transition">
                 How Much Do You Need to Retire on Dividends?
               </h3>
-              <p class="text-sm text-slate-600 mt-2 leading-relaxed">
+              <p class="text-sm text-[#626B64] mt-2 leading-relaxed">
                 Work backwards from your retirement income goal
                 to estimate the portfolio you might need.
               </p>
-              <span class="inline-block text-sm font-semibold text-emerald-700 mt-4">
+              <span class="inline-block text-sm font-semibold text-[#164B35] mt-4">
                 Read the guide →
               </span>
             </a>
 
             <a
               href="/are-you-addicted-to-dividends/"
-              class="bg-white border border-slate-200 rounded-2xl p-5 hover:border-emerald-500 transition group"
+              class="bg-[#FFFCF6] border border-[#E3D8C8] rounded-xl p-5 hover:border-[#164B35] transition group"
             >
-              <h3 class="font-bold text-[#0F291E] group-hover:text-emerald-700 transition">
+              <h3 class="font-bold !text-[#18251F] group-hover:!text-[#164B35] transition">
                 Are You Addicted to Dividends?
               </h3>
-              <p class="text-sm text-slate-600 mt-2 leading-relaxed">
+              <p class="text-sm text-[#626B64] mt-2 leading-relaxed">
                 Is chasing dividend income always the best approach?
                 Take a step back and look at the bigger picture.
               </p>
-              <span class="inline-block text-sm font-semibold text-emerald-700 mt-4">
+              <span class="inline-block text-sm font-semibold text-[#164B35] mt-4">
                 Read the article →
               </span>
             </a>
@@ -393,27 +390,22 @@ const toolDetails = {
           </div>
         </section>
 
-        <!-- Favourite Deals -->
-        
-
       </div>
 
-      <!-- Right Column: Sidebar -->
-      <aside class="lg:col-span-4 space-y-8 sticky top-28">
+      <!-- Sidebar -->
+      <aside class="lg:col-span-4 space-y-8 lg:sticky lg:top-28">
 
-        
+        <div class="bg-[#FFFCF6] border border-[#E3D8C8] rounded-2xl p-6 space-y-4">
 
-        <div class="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm space-y-4">
-
-          <h3 class="text-base font-bold text-[#0F291E] border-b border-slate-100 pb-3">
+          <h3 class="text-base font-bold !text-[#18251F] border-b border-[#E3D8C8] pb-3">
             Other Calculators
           </h3>
 
-          <ul class="space-y-3 text-sm">
+          <ul class="space-y-4 text-sm">
             <li>
               <a
                 href="/calculators-and-tools/future-wealth-calculator"
-                class="text-slate-700 hover:text-[#10B981] font-medium transition block"
+                class="text-[#26312B] hover:text-[#164B35] font-medium transition block"
               >
                 → Future Wealth Calculator
               </a>
@@ -422,7 +414,7 @@ const toolDetails = {
             <li>
               <a
                 href="/calculators-and-tools/compound-interest-calculator"
-                class="text-slate-700 hover:text-[#10B981] font-medium transition block"
+                class="text-[#26312B] hover:text-[#164B35] font-medium transition block"
               >
                 → Compound Interest Calculator
               </a>
@@ -431,7 +423,7 @@ const toolDetails = {
             <li>
               <a
                 href="/calculators-and-tools/mortgage-offset-calculator"
-                class="text-slate-700 hover:text-[#10B981] font-medium transition block"
+                class="text-[#26312B] hover:text-[#164B35] font-medium transition block"
               >
                 → Mortgage Offset Calculator
               </a>
@@ -471,7 +463,7 @@ const toolDetails = {
     if (perPeriodResultEl) perPeriodResultEl.textContent = `$${paymentPerPeriod.toFixed(2)}`;
 
     if (freqLabelEl) {
-      freqLabelEl.innerHTML = `Paid out <span class="text-white font-semibold">${frequencyText.toLowerCase()}</span>, resulting in ${frequency} distributions per year. The per-payment figure is a mathematical average, not a guarantee of the amount or timing of individual distributions.`;
+      freqLabelEl.innerHTML = `Paid out <span class="!text-[#FFFCF6] font-semibold">${frequencyText.toLowerCase()}</span>, resulting in ${frequency} distributions per year. The per-payment figure is a mathematical average, not a guarantee of the amount or timing of individual distributions.`;
     }
   });
 </script>

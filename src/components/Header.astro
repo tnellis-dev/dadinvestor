@@ -1,27 +1,190 @@
+
 ---
-// src/components/Header.astro
 ---
-<header class="bg-[#0F291E] text-white border-b border-emerald-900/50 sticky top-0 z-50 shadow-md">
-  <div class="max-w-7xl mx-auto px-4 h-20 flex items-center justify-between">
-    
-    <a href="/" class="flex items-center gap-2 font-extrabold text-xl tracking-tight text-white">
-      <span class="w-8 h-8 rounded-lg bg-[#10B981] text-[#0F291E] flex items-center justify-center font-black text-base shadow-inner">
-        $
-      </span>
+
+<header class="site-header">
+  <div class="header-inner">
+
+    <a href="/" class="site-logo" aria-label="DadInvestor home">
       DadInvestor
     </a>
 
-    <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-300">
-      <a href="/calculators-and-tools" class="hover:text-[#10B981] transition">Calculators & Tools</a>
-      <a href="/etfs-investing" class="hover:text-[#10B981] transition">ETFs & Investing</a>
-      <a href="/banking-savings" class="hover:text-[#10B981] transition">Banking & Savings</a>
+    <nav class="desktop-nav" aria-label="Main navigation">
+      <a href="/articles">Articles</a>
+      <a href="/calculators-and-tools">Calculators</a>
+      <a href="/etfs-investing">Investing</a>
+      <a href="/banking-savings">Banking</a>
+      <a href="/about">About</a>
     </nav>
 
-    <div>
-      <a href="/calculators-and-tools/future-wealth-calculator" class="bg-[#10B981] text-[#0F291E] font-bold text-sm px-4 py-2.5 rounded-xl hover:bg-emerald-400 transition shadow-sm">
-        Future Wealth Calculator
-      </a>
-    </div>
+    <a href="/calculators-and-tools/future-wealth-calculator" class="header-cta">
+      Future Wealth Calculator
+    </a>
+
+    <details class="mobile-menu">
+      <summary>Menu</summary>
+      <nav aria-label="Mobile navigation">
+        <a href="/articles">Articles</a>
+        <a href="/calculators-and-tools">Calculators</a>
+        <a href="/etfs-investing">Investing</a>
+        <a href="/banking-savings">Banking</a>
+        <a href="/about">About</a>
+        <a href="/calculators-and-tools/future-wealth-calculator">
+          Future Wealth Calculator
+        </a>
+      </nav>
+    </details>
 
   </div>
 </header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    width: 100%;
+    background: var(--di-cream);
+    border-bottom: 1px solid var(--di-line);
+  }
+
+  .header-inner {
+    max-width: 1200px;
+    min-height: 80px;
+    margin: 0 auto;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 36px;
+  }
+
+  .site-logo {
+    flex-shrink: 0;
+    color: var(--di-ink);
+    font-family: var(--di-font-heading);
+    font-size: 38px;
+    font-weight: 700;
+    letter-spacing: -0.055em;
+    text-decoration: none;
+  }
+
+  .desktop-nav {
+    display: flex;
+    align-items: center;
+    gap: 27px;
+  }
+
+  .desktop-nav a {
+    color: var(--di-ink);
+    font-size: 19px;
+    font-weight: 500;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: color 180ms ease;
+  }
+
+  .desktop-nav a:hover {
+    color: var(--di-forest);
+  }
+
+  .header-cta {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 50px;
+    padding: 10px 24px;
+    border-radius: 999px;
+    background: var(--di-forest);
+    color: #FFFFFF;
+    font-family: var(--di-font-heading);
+    font-size: 19px;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background 180ms ease;
+  }
+
+  .header-cta:hover {
+    background: var(--di-forest-deep);
+    color: #FFFFFF;
+  }
+
+  .mobile-menu {
+    display: none;
+    position: relative;
+  }
+
+  .mobile-menu summary {
+    cursor: pointer;
+    color: var(--di-forest);
+    font-size: 20px;
+    font-weight: 600;
+    list-style: none;
+  }
+
+  .mobile-menu nav {
+    position: absolute;
+    top: calc(100% + 20px);
+    right: 0;
+    width: 280px;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    background: var(--di-paper);
+    border: 1px solid var(--di-line);
+    border-radius: 12px;
+    box-shadow: 0 12px 30px rgb(0 0 0 / 10%);
+  }
+
+  .mobile-menu nav a {
+    padding: 12px;
+    color: var(--di-ink);
+    font-size: 19px;
+    text-decoration: none;
+  }
+
+  .mobile-menu nav a:hover {
+    color: var(--di-forest);
+    background: var(--di-cream);
+  }
+
+  @media (max-width: 1000px) {
+    .header-inner {
+      gap: 20px;
+    }
+
+    .desktop-nav {
+      gap: 16px;
+    }
+
+    .desktop-nav a {
+      font-size: 17px;
+    }
+
+    .site-logo {
+      font-size: 33px;
+    }
+
+    .header-cta {
+      font-size: 17px;
+      padding: 10px 18px;
+    }
+  }
+
+  @media (max-width: 760px) {
+    .header-inner {
+      min-height: 72px;
+    }
+
+    .desktop-nav,
+    .header-cta {
+      display: none;
+    }
+
+    .mobile-menu {
+      display: block;
+    }
+  }
+</style>

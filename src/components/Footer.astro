@@ -1,47 +1,79 @@
+
 ---
-// src/components/Footer.astro
 const currentYear = new Date().getFullYear();
 ---
-<footer class="bg-[#0F291E] text-slate-400 py-12 px-4 border-t border-emerald-950">
-  <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-    
-    <!-- Col 1: About -->
-    <div class="space-y-3 md:col-span-2">
-      <div class="flex items-center gap-2 font-bold text-lg text-white">
-        <span class="w-6 h-6 rounded bg-[#10B981] text-[#0F291E] flex items-center justify-center text-xs font-black">
-          $
-        </span>
+
+<footer class="border-t border-[var(--di-line)] bg-[var(--di-cream)] px-5 py-14 text-[var(--di-body)] lg:px-8">
+
+  <div class="mx-auto mb-10 grid max-w-7xl grid-cols-1 gap-10 md:grid-cols-4">
+
+    <!-- About -->
+    <div class="space-y-4 md:col-span-2">
+      <a
+        href="/"
+        class="inline-block font-[var(--di-font-heading)] text-3xl font-semibold tracking-[-0.04em] text-[var(--di-ink)] no-underline"
+      >
         DadInvestor
-      </div>
-      <p class="text-sm text-slate-300 leading-relaxed max-w-md">
+      </a>
+
+      <p class="max-w-xl text-xl leading-relaxed">
         Independent financial education and practical digital tools designed to help everyday Australian parents plan their family's wealth.
       </p>
     </div>
 
-    <!-- Col 2: Quick Links -->
-    <div class="space-y-3">
-      <p class="text-xs font-bold text-white uppercase tracking-wider">Hubs</p>
-      <ul class="space-y-2 text-sm">
-        <li><a href="/calculators-and-tools" class="hover:text-[#10B981] transition">Calculators & Tools</a></li>
-        <li><a href="/etfs-investing" class="hover:text-[#10B981] transition">ETFs & Investing</a></li>
-        <li><a href="/banking-savings" class="hover:text-[#10B981] transition">Banking & Savings</a></li>
+    <!-- Explore -->
+    <div class="space-y-4">
+      <h2 class="font-[var(--di-font-heading)] text-2xl font-semibold text-[var(--di-ink)]">
+        Explore
+      </h2>
+
+      <ul class="space-y-3 text-xl">
+        <li><a href="/articles" class="no-underline transition-colors hover:text-[var(--di-forest)]">Articles</a></li>
+        <li><a href="/calculators-and-tools" class="no-underline transition-colors hover:text-[var(--di-forest)]">Calculators &amp; Tools</a></li>
+        <li><a href="/etfs-investing" class="no-underline transition-colors hover:text-[var(--di-forest)]">ETFs &amp; Investing</a></li>
+        <li><a href="/banking-savings" class="no-underline transition-colors hover:text-[var(--di-forest)]">Banking &amp; Savings</a></li>
       </ul>
     </div>
 
-    <!-- Col 3: Holding Entity -->
-    <div class="space-y-3">
-      <p class="text-xs font-bold text-white uppercase tracking-wider">Network</p>
-      <ul class="space-y-2 text-sm">
-        <li><a href="/about" class="hover:text-[#10B981] transition">About DadInvestor</a></li>
-        <li><a href="https://searchlightweb.com.au" target="_blank" rel="noopener" class="hover:text-[#10B981] transition">Design by Searchlight Web</a></li>
-        <li>Part of <a href="https://ellismedia.com.au" target="_blank" rel="noopener" class="hover:text-[#10B981] transition">EllisMedia</a></li>
+    <!-- About / Network -->
+    <div class="space-y-4">
+      <h2 class="font-[var(--di-font-heading)] text-2xl font-semibold text-[var(--di-ink)]">
+        About
+      </h2>
+
+      <ul class="space-y-3 text-xl">
+        <li><a href="/about" class="no-underline transition-colors hover:text-[var(--di-forest)]">About DadInvestor</a></li>
+
+        <li>
+          <a
+            href="https://searchlightweb.com.au"
+            target="_blank"
+            rel="noopener"
+            class="no-underline transition-colors hover:text-[var(--di-forest)]"
+          >
+            Design by Searchlight Web
+          </a>
+        </li>
+
+        <li>
+          Part of
+          <a
+            href="https://ellismedia.com.au"
+            target="_blank"
+            rel="noopener"
+            class="no-underline transition-colors hover:text-[var(--di-forest)]"
+          >
+            EllisMedia
+          </a>
+        </li>
       </ul>
     </div>
 
   </div>
 
-  <!-- Copyright & Disclaimer Note -->
-  <div class="max-w-7xl mx-auto pt-8 border-t border-emerald-900/40 text-xs text-slate-500 flex flex-col md:flex-row justify-between gap-4">
+  <!-- Copyright -->
+  <div class="mx-auto flex max-w-7xl flex-col justify-between gap-3 border-t border-[var(--di-line)] pt-6 text-xl text-[var(--di-muted)] md:flex-row">
     <p>© {currentYear} DadInvestor.com.au. All rights reserved.</p>
   </div>
+
 </footer>

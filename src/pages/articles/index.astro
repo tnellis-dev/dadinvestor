@@ -1,200 +1,355 @@
+
 ---
-// src/pages/articles/index.astro
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { Image } from 'astro:assets';
+import { sanityClient } from '../../lib/sanity';
 
-// Article data array (Replaced by Sanity GROQ query in production)
-const articles = [
-  {
-    slug: 'best-etf-in-australia',
-    title: 'Best ETFs in Australia (2026 Guide for Everyday Investors)',
-    category: 'ETFs & Investing',
-    readTime: '8 min read',
-    updatedDate: 'August 2026',
-    excerpt: 'Looking for the best exchange-traded funds to build long-term wealth? Here is our plain-English breakdown of core ASX index funds, fees, and strategy for Aussie parents.',
-    featured: true,
-    image: 'https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&w=1200&q=80',
-  },
-  {
-    slug: 'ubank-vs-up-bank',
-    title: 'Ubank vs Up Bank: Which Digital Bank Wins in 2026?',
-    category: 'Banking & Savings',
-    readTime: '6 min read',
-    updatedDate: 'August 2026',
-    excerpt: 'Comparing high-interest savings rates, app features, budgeting tools, and everyday transaction accounts between two of Australia’s favourite neobanks.',
-    featured: false,
-    image: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=800&q=80',
-  },
-  {
-    slug: 'raiz-review',
-    title: 'Raiz Review: Is Micro-Investing Worth It in Australia?',
-    category: 'App Reviews',
-    readTime: '5 min read',
-    updatedDate: 'August 2026',
-    excerpt: 'An independent, jargon-free review of Raiz micro-investing. Look at fees, portfolio performance history, and whether it fits your family budget.',
-    featured: false,
-    image: 'https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?auto=format&fit=crop&w=800&q=80',
-  },
-  {
-    slug: 'macquarie-bank-review',
-    title: 'Macquarie Savings Account Review: High Rates with No Conditions',
-    category: 'Banking & Savings',
-    readTime: '5 min read',
-    updatedDate: 'July 2026',
-    excerpt: 'Why Macquarie Bank has become a top choice for Aussies looking for unconditional high-interest savings rates and smooth transaction features.',
-    featured: false,
-    image: 'https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&w=800&q=80',
-  },
-  {
-    slug: 'betashares-kids-accounts',
-    title: 'BetaShares Direct Kids Accounts: Best Way to Invest for Children?',
-    category: 'ETFs & Investing',
-    readTime: '7 min read',
-    updatedDate: 'July 2026',
-    excerpt: 'Breaking down tax implications, minor trust structures, fee models, and long-term compounding options when investing for your kids in Australia.',
-    featured: false,
-    image: 'https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?auto=format&fit=crop&w=800&q=80',
-  },
-  {
-    slug: 'commsec-pockets-review',
-    title: 'CommSec Pocket Review: Cheap ASX Micro-Investing App?',
-    category: 'App Reviews',
-    readTime: '6 min read',
-    updatedDate: 'June 2026',
-    excerpt: 'Is CommSec Pocket the cheapest way to trade ETFs in Australia? We review trades, $2 brokerage fees, CHESS sponsorship, and ETF themes.',
-    featured: false,
-    image: 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=800&q=80',
-  },
-  {
-    slug: 'google-sheets-vs-sharesight',
-    title: 'Google Sheets vs Sharesight: How Should You Track ETF Returns?',
-    category: 'Tools & Tracking',
-    readTime: '6 min read',
-    updatedDate: 'May 2026',
-    excerpt: 'Comparing automated dividend tracking, dividend reinvestment plans (DRP), tax reporting, and cost between Sharesight and custom spreadsheets.',
-    featured: false,
-    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80',
+// Fetch all published articles from Sanity
+const articles = await sanityClient.fetch(`
+  *[
+    _type == "article" &&
+    defined(slug.current) &&
+    !(_id in path("drafts.**"))
+  ] | order(publishedAt desc) {
+    title,
+    subtitle,
+    category,
+    "slug": slug.current,
+    publishedAt,
+    dateModified,
+    readTimeMinutes,
+    featured,
+    heroImageAlt,
+    "imageUrl": heroImage.asset->url
   }
-];
+`);
 
-const featuredArticle = articles.find((a) => a.featured) || articles[0];
-const regularArticles = articles.filter((a) => a.slug !== featuredArticle.slug);
+// Featured article (newest featured article, or latest article as fallback)
+const featuredArticle =
+  articles.find((article) => article.featured) || articles[0];
+
+// All remaining articles
+const regularArticles = articles.filter(
+  (article) => article.slug !== featuredArticle?.slug
+);
+
+// Format dates for display
+const formatDate = (date) => {
+  if (!date) return '';
+
+  return new Date(date).toLocaleDateString('en-AU', {
+    month: 'long',
+    year: 'numeric',
+  });
+};
+
+// Structured data
+const pageSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: 'Guides, Reviews & Practical Education',
+  description:
+    'Explore our complete library of independent Australian financial guides, ETF comparisons, digital bank reviews, and practical wealth strategies.',
+  url: 'https://www.dadinvestor.com.au/articles/',
+  mainEntity: {
+    '@type': 'ItemList',
+    itemListElement: articles.map((article, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: article.title,
+      url: `https://www.dadinvestor.com.au/${article.slug}/`,
+    })),
+  },
+};
 ---
 
-<BaseLayout 
-  title="All Guides, Reviews & Articles - Dad Investor" 
+<BaseLayout
+  title="All Guides, Reviews & Articles - Dad Investor"
   description="Explore our complete library of independent Australian financial guides, ETF comparisons, digital bank reviews, and practical wealth strategies."
 >
-  <!-- Header Banner -->
-  <header class="bg-[#0F291E] text-white py-16 px-4 border-b border-emerald-900/50">
-    <div class="max-w-7xl mx-auto space-y-4">
-      <div class="flex items-center gap-3">
-        <span class="bg-[#10B981]/20 text-[#10B981] font-semibold text-xs uppercase tracking-wider px-3 py-1 rounded-full border border-[#10B981]/30">
-          Knowledge Base
-        </span>
-        <span class="text-slate-400 text-sm">• 100% Independent</span>
-      </div>
-      
-      <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight leading-tight text-white max-w-4xl">
+  <script type="application/ld+json" set:html={JSON.stringify(pageSchema)} />
+
+  <!-- Hero -->
+  <header class="bg-[#164B35] text-white py-16 px-4">
+    <div class="max-w-[1168px] mx-auto space-y-5">
+      <p class="text-sm font-medium tracking-wide text-[#EAE2D5]">
+        Independent financial education
+      </p>
+
+      <h1 class="text-4xl md:text-5xl font-semibold tracking-tight leading-tight !text-[#FFFCF6] max-w-4xl">
         Guides, Reviews & Practical Education
       </h1>
-      
-      <p class="text-lg text-slate-300 leading-relaxed font-normal max-w-3xl">
-        Cut through the corporate jargon. Search our complete directory of plain-English financial breakdowns designed for Aussie families.
+
+      <p class="text-lg leading-relaxed text-[#EAE2D5] max-w-2xl">
+        Clear, independent guides to investing, banking and building wealth.
+        Practical information to help you make better financial decisions.
       </p>
     </div>
   </header>
 
-  <main class="bg-[#F8FAFC] py-12 px-4 sm:px-6 lg:px-8">
-    <div class="max-w-7xl mx-auto space-y-12">
+  <main class="bg-[#F8F3EA] py-16 px-4">
+    <div class="max-w-[1168px] mx-auto space-y-16">
 
-      <!-- Featured Article Callout Card -->
-      <section>
-        <a 
-          href={`/${featuredArticle.slug}`} 
-          class="group grid grid-cols-1 lg:grid-cols-12 gap-8 bg-white rounded-3xl border border-slate-200 p-6 lg:p-8 shadow-sm hover:shadow-md transition items-center"
-        >
-          <div class="lg:col-span-7 space-y-4">
-            <div class="flex items-center gap-3">
-              <span class="bg-emerald-50 text-[#10B981] font-bold text-xs uppercase tracking-wider px-3 py-1 rounded-full border border-emerald-100">
-                Featured Guide
+      <!-- Featured Article -->
+      {featuredArticle && (
+        <section>
+          <a
+            href={`/${featuredArticle.slug}`}
+            class="group grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center"
+          >
+            <div class="space-y-5">
+              <p class="text-sm font-semibold text-[#164B35] tracking-wide">
+                Featured article
+              </p>
+
+              <h2 class="text-3xl md:text-4xl font-semibold leading-tight text-[#18251F] group-hover:text-[#164B35] transition">
+                {featuredArticle.title}
+              </h2>
+
+              {featuredArticle.subtitle && (
+                <p class="text-lg leading-relaxed text-[#626B64]">
+                  {featuredArticle.subtitle}
+                </p>
+              )}
+
+              <div class="flex flex-wrap items-center gap-3 text-sm text-[#626B64]">
+                {featuredArticle.category && (
+                  <span>{featuredArticle.category}</span>
+                )}
+
+                {featuredArticle.readTimeMinutes && (
+                  <>
+                    <span>·</span>
+                    <span>{featuredArticle.readTimeMinutes} min read</span>
+                  </>
+                )}
+
+                {featuredArticle.publishedAt && (
+                  <>
+                    <span>·</span>
+                    <span>{formatDate(featuredArticle.publishedAt)}</span>
+                  </>
+                )}
+              </div>
+
+              <span class="inline-flex items-center gap-2 font-semibold text-[#164B35]">
+                Read article
+                <span class="transition-transform group-hover:translate-x-1">→</span>
               </span>
-              <span class="text-slate-500 text-xs">• {featuredArticle.readTime}</span>
             </div>
-            
-            <h2 class="text-2xl sm:text-3xl font-extrabold text-[#0F291E] group-hover:text-[#10B981] transition">
-              {featuredArticle.title}
-            </h2>
-            
-            <p class="text-slate-600 text-base leading-relaxed">
-              {featuredArticle.excerpt}
-            </p>
 
-            <div class="pt-2 text-sm font-bold text-[#0F291E] flex items-center gap-2">
-              Read Complete Breakdown <span class="group-hover:translate-x-1 transition-transform">→</span>
-            </div>
-          </div>
-
-          <div class="lg:col-span-5 rounded-2xl overflow-hidden aspect-[16/9] border border-slate-100 bg-slate-50">
-            <Image 
-              src={featuredArticle.image} 
-              alt={featuredArticle.title} 
-              width={1200} 
-              height={675} 
-              class="w-full h-full object-cover group-hover:scale-105 transition duration-300"
-            />
-          </div>
-        </a>
-      </section>
-
-      <!-- All Articles Grid (2 Rows x 3 Columns = 6 Cards) -->
-      <section class="space-y-6">
-        <h2 class="text-2xl font-bold text-[#0F291E] tracking-tight">Recent Articles & Reviews</h2>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {regularArticles.map((article) => (
-            <a 
-              href={`/${article.slug}`} 
-              class="group bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-md hover:border-[#10B981]/50 transition flex flex-col justify-between"
-            >
-              <div>
-                <div class="aspect-[16/9] overflow-hidden bg-slate-100 border-b border-slate-100">
-                  <Image 
-                    src={article.image} 
-                    alt={article.title} 
-                    width={800} 
-                    height={450} 
-                    loading="lazy"
-                    class="w-full h-full object-cover group-hover:scale-105 transition duration-300"
-                  />
-                </div>
-
-                <div class="p-6 space-y-3">
-                  <div class="flex items-center justify-between text-xs">
-                    <span class="font-bold text-[#10B981] uppercase tracking-wider bg-emerald-50 px-2.5 py-1 rounded-md border border-emerald-100">
-                      {article.category}
-                    </span>
-                    <span class="text-slate-400">{article.readTime}</span>
-                  </div>
-
-                  <h3 class="text-lg font-bold text-[#0F291E] group-hover:text-[#10B981] transition leading-snug">
-                    {article.title}
-                  </h3>
-
-                  <p class="text-slate-600 text-sm leading-relaxed line-clamp-3">
-                    {article.excerpt}
-                  </p>
-                </div>
+            {featuredArticle.imageUrl && (
+              <div class="aspect-[16/10] overflow-hidden bg-[#EAE2D5]">
+                <img
+                  src={featuredArticle.imageUrl}
+                  alt={featuredArticle.heroImageAlt || featuredArticle.title}
+                  width="1200"
+                  height="750"
+                  fetchpriority="high"
+                  class="w-full h-full object-cover transition duration-500 group-hover:scale-[1.02]"
+                />
               </div>
+            )}
+          </a>
+        </section>
+      )}
 
-              <div class="p-6 pt-0 text-sm font-semibold text-[#0F291E] flex items-center gap-1">
-                Read Article <span class="group-hover:translate-x-1 transition-transform">→</span>
-              </div>
-            </a>
-          ))}
+      <div class="border-t border-[#E3D8C8]"></div>
+
+      <!-- Article Library -->
+      <section class="space-y-8">
+
+        <div class="space-y-3">
+          <h2 class="text-3xl font-semibold text-[#18251F]">
+            Explore the library
+          </h2>
+
+          <p class="text-lg text-[#626B64]">
+            Browse the latest guides, comparisons and reviews.
+          </p>
         </div>
-      </section>
 
+        <!-- Category Filters -->
+        <div class="flex flex-wrap gap-3" aria-label="Filter articles">
+          <button
+            type="button"
+            class="article-filter active-filter"
+            data-filter="all"
+            aria-pressed="true"
+          >
+            All articles
+          </button>
+
+          <button
+            type="button"
+            class="article-filter"
+            data-filter="ETFs & Investing"
+            aria-pressed="false"
+          >
+            ETFs & Investing
+          </button>
+
+          <button
+            type="button"
+            class="article-filter"
+            data-filter="Banking & Savings"
+            aria-pressed="false"
+          >
+            Banking & Savings
+          </button>
+        </div>
+
+        <!-- Article Count -->
+        <p
+          id="article-count"
+          class="text-sm text-[#626B64]"
+          aria-live="polite"
+        >
+          {regularArticles.length} articles
+        </p>
+
+        <!-- Articles Grid -->
+        {regularArticles.length > 0 ? (
+          <div
+            id="article-grid"
+            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12"
+          >
+            {regularArticles.map((article) => (
+              <article
+                class="article-item group"
+                data-category={article.category || ''}
+              >
+                <a href={`/${article.slug}`} class="block space-y-4">
+
+                  {article.imageUrl ? (
+                    <div class="aspect-[16/10] overflow-hidden bg-[#EAE2D5]">
+                      <img
+                        src={article.imageUrl}
+                        alt={article.heroImageAlt || article.title}
+                        width="800"
+                        height="500"
+                        loading="lazy"
+                        class="w-full h-full object-cover transition duration-500 group-hover:scale-[1.02]"
+                      />
+                    </div>
+                  ) : (
+                    <div class="aspect-[16/10] bg-[#EAE2D5]"></div>
+                  )}
+
+                  <div class="space-y-3">
+
+                    <div class="flex flex-wrap items-center gap-2 text-sm text-[#626B64]">
+                      {article.category && (
+                        <span class="font-medium text-[#164B35]">
+                          {article.category}
+                        </span>
+                      )}
+
+                      {article.readTimeMinutes && (
+                        <>
+                          <span>·</span>
+                          <span>{article.readTimeMinutes} min read</span>
+                        </>
+                      )}
+                    </div>
+
+                    <h3 class="text-xl font-semibold leading-snug text-[#18251F] group-hover:text-[#164B35] transition">
+                      {article.title}
+                    </h3>
+
+                    {article.subtitle && (
+                      <p class="text-base leading-relaxed text-[#626B64] line-clamp-3">
+                        {article.subtitle}
+                      </p>
+                    )}
+
+                    <p class="text-sm font-semibold text-[#164B35]">
+                      Read article →
+                    </p>
+
+                  </div>
+                </a>
+              </article>
+            ))}
+          </div>
+        ) : (
+          <p class="text-[#626B64]">
+            No articles have been published yet.
+          </p>
+        )}
+
+        <p
+          id="no-articles"
+          class="hidden text-[#626B64] py-8"
+        >
+          No articles found in this category.
+        </p>
+
+      </section>
     </div>
   </main>
+
+  <style>
+    .article-filter {
+      padding: 10px 18px;
+      border: 1px solid #E3D8C8;
+      color: #26312B;
+      background: transparent;
+      font-size: 15px;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+
+    .article-filter:hover {
+      border-color: #164B35;
+      color: #164B35;
+    }
+
+    .article-filter.active-filter {
+      background: #164B35;
+      border-color: #164B35;
+      color: #FFFCF6;
+    }
+  </style>
+
+  <script>
+    const filterButtons = document.querySelectorAll('.article-filter');
+    const articleItems = document.querySelectorAll('.article-item');
+    const articleCount = document.querySelector('#article-count');
+    const noArticles = document.querySelector('#no-articles');
+
+    filterButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        const selectedCategory = button.getAttribute('data-filter');
+        let visibleCount = 0;
+
+        filterButtons.forEach((item) => {
+          const isActive = item === button;
+
+          item.classList.toggle('active-filter', isActive);
+          item.setAttribute('aria-pressed', String(isActive));
+        });
+
+        articleItems.forEach((article) => {
+          const category = article.getAttribute('data-category');
+
+          const isVisible =
+            selectedCategory === 'all' ||
+            category === selectedCategory;
+
+          article.classList.toggle('hidden', !isVisible);
+
+          if (isVisible) visibleCount++;
+        });
+
+        if (articleCount) {
+          articleCount.textContent =
+            `${visibleCount} ${visibleCount === 1 ? 'article' : 'articles'}`;
+        }
+
+        if (noArticles) {
+          noArticles.classList.toggle('hidden', visibleCount > 0);
+        }
+      });
+    });
+  </script>
 </BaseLayout>

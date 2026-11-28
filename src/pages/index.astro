@@ -1,6 +1,22 @@
+
 ---
-// src/pages/index.astro
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { sanityClient } from '../lib/sanity';
+
+const latestArticles = await sanityClient.fetch(`
+  *[
+    _type == "article" &&
+    defined(slug.current) &&
+    !(_id in path("drafts.**"))
+  ] | order(publishedAt desc)[0...3] {
+    title,
+    subtitle,
+    publishedAt,
+    "slug": slug.current,
+    "imageUrl": heroImage.asset->url,
+    heroImageAlt
+  }
+`);
 
 const homepageSchema = {
   "@context": "https://schema.org",
@@ -18,135 +34,534 @@ const homepageSchema = {
   "inLanguage": "en-AU"
 };
 
+
+
 ---
 
 <BaseLayout
   title="Australian Investing Guides & Financial Calculators"
   description="Learn about investing, compare Australian ETFs and savings accounts, and use free financial calculators to make smarter decisions about your money."
->  <main>
-    <section class="bg-[#0F291E] text-white pt-16 pb-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-      <div class="mx-auto max-w-6xl text-center space-y-6">
-        <div class="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3.5 py-1 text-xs font-semibold text-[#10B981]">
-          <span>100% Independent</span>-<span>100% Australian</span>
-          
-        </div>
+>
+  <main>
 
-        <h1 class="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl text-white">
-          Simple Tools & Practical Education <br class="hidden sm:inline" />
-          <span class="text-[#10B981]">for Everyday Aussie Investors.</span>
-        </h1>
+    <!-- Hero -->
+    <section class="hero-section">
+      <div class="hero-inner">
 
-        <p class="mx-auto max-w-2xl text-base sm:text-lg text-slate-300">
-          Understand your money, compare options, and build long-term wealth with independent calculators and plain-English guides.
-        </p>
+        <div class="hero-copy">
+          <h1>
+            Practical money<br class="hidden sm:block" />
+            ideas for a<br class="hidden sm:block" />
+            <em>richer life.</em>
+          </h1>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-6 text-left max-w-4xl mx-auto">
-          <div class="rounded-2xl border border-slate-700 bg-slate-900/90 p-6 flex flex-col justify-between hover:border-emerald-500/50 transition">
-            <div class="space-y-3">
-              <div class="inline-block rounded-md bg-emerald-500/20 px-2.5 py-1 text-xs font-bold text-[#10B981]">
-                INTERACTIVE
-              </div>
-              <h2 class="text-2xl font-bold text-white">Financial Tools & Calculators</h2>
-              <p class="text-sm text-slate-300">
-                Model a 30-year wealth roadmap, forecast dividend cash flows, and compare mortgage offset accounts against ETF growth.
-              </p>
-            </div>
-            <div class="pt-6">
-              <a href="/calculators-and-tools" class="inline-flex w-full items-center justify-center rounded-xl bg-[#10B981] px-5 py-3 text-sm font-bold text-[#0F291E] hover:bg-emerald-400 transition">
-                Explore All Calculators →
-              </a>
-            </div>
-          </div>
+          <div class="hero-underline"></div>
 
-          <div class="rounded-2xl border border-slate-700 bg-slate-900/90 p-6 flex flex-col justify-between hover:border-emerald-500/50 transition">
-            <div class="space-y-3">
-              <div class="inline-block rounded-md bg-slate-800 px-2.5 py-1 text-xs font-bold text-slate-300">
-                RESEARCH
-              </div>
-              <h2 class="text-2xl font-bold text-white">Guides, Reviews & Comparisons</h2>
-              <p class="text-sm text-slate-300">
-                Read plain-English breakdowns on the best Australian ETFs, neobanks (Ubank vs UP), and micro-investing apps like Raiz.
-              </p>
-            </div>
-            <div class="pt-6">
-              <a href="/articles" class="inline-flex w-full items-center justify-center rounded-xl border border-slate-700 bg-slate-800/80 px-5 py-3 text-sm font-semibold text-white hover:bg-slate-800 transition">
-                Read Popular Guides →
-              </a>
-            </div>
+          <p class="hero-description">
+            Investing, banking and financial decisions for everyday Australians,
+            with a focus on building long-term wealth and more freedom for the
+            things that matter.
+          </p>
+
+          <div class="hero-actions">
+            <a href="/calculators-and-tools" class="button-primary">
+              Explore the calculators
+            </a>
+
+            <a href="/articles" class="button-secondary">
+              Read the latest articles
+            </a>
           </div>
         </div>
-      </div>
-    </section>
 
-    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-      <div class="flex items-center justify-between mb-8">
-        <div>
-          <h2 class="text-2xl font-bold text-slate-900 tracking-tight">Interactive Calculators</h2>
-          <p class="text-sm text-slate-600 mt-1">Built specifically for Australian tax, super, and investment rules.</p>
+        <div class="hero-portrait">
+          <div class="portrait-frame">
+            <img
+              src="/images/tim-ellis.jpg"
+              alt="Tim Ellis of DadInvestor"
+              fetchpriority="high"
+            />
+          </div>
+          <div class="portrait-scribble" aria-hidden="true"></div>
         </div>
-        <a href="/calculators-and-tools" class="text-sm font-semibold text-[#0F291E] hover:text-[#10B981]">
-          View all tools →
-        </a>
-      </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <a href="/calculators-and-tools/future-wealth-calculator" class="group rounded-2xl border-2 border-emerald-500/30 bg-white p-6 shadow-sm hover:shadow-md transition">
-          <span class="inline-block rounded-full bg-emerald-100 px-2.5 py-0.5 text-xs font-bold text-emerald-800 mb-3">Forecaster</span>
-          <h3 class="text-lg font-bold text-slate-900 group-hover:text-[#10B981] transition">Future Wealth Calculator</h3>
-          <p class="text-sm text-slate-600 mt-2">Project your 30-year net worth combining Super, ETFs, property, and debt.</p>
-          <div class="mt-4 text-sm font-semibold text-[#0F291E]">Launch Calculator →</div>
-        </a>
-
-        <a href="/calculators-and-tools/mortgage-offset-calculator" class="group rounded-2xl border border-slate-200 bg-white p-6 shadow-sm hover:shadow-md transition">
-          <span class="inline-block rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-bold text-slate-700 mb-3">Debt Strategy</span>
-          <h3 class="text-lg font-bold text-slate-900 group-hover:text-[#10B981] transition">Mortgage vs. Invest</h3>
-          <p class="text-sm text-slate-600 mt-2">Calculate whether extra cash is better off in your offset account or invested.</p>
-          <div class="mt-4 text-sm font-semibold text-[#0F291E]">Launch Calculator →</div>
-        </a>
       </div>
     </section>
 
-    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 border-t border-slate-200">
-      <div class="flex items-center justify-between mb-8">
-        <div>
-          <h2 class="text-2xl font-bold text-slate-900 tracking-tight">Most Popular Guides & Comparisons</h2>
-          <p class="text-sm text-slate-600 mt-1">Beginner-friendly money & investing breakdowns.</p>
+    <!-- Latest articles -->
+    <section class="content-section">
+      <div class="section-heading">
+        <h2>Latest articles</h2>
+        <a href="/articles" class="section-link">
+          View all articles <span aria-hidden="true">→</span>
+        </a>
+      </div>
+
+      {latestArticles.length > 0 ? (
+        <div class="article-grid">
+          {latestArticles.map((article: any) => (
+            <a href={`/${article.slug}`} class="article-card">
+              {article.imageUrl ? (
+                <div class="article-image">
+                  <img
+                    src={article.imageUrl}
+                    alt={article.heroImageAlt || article.title}
+                    loading="lazy"
+                  />
+                </div>
+              ) : (
+                <div class="article-image article-image-placeholder"></div>
+              )}
+
+              <div class="article-card-content">
+                <h3>{article.title}</h3>
+                {article.subtitle && (
+                  <p>{article.subtitle}</p>
+                )}
+              </div>
+            </a>
+          ))}
         </div>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <a href="/best-etf-in-australia" class="group rounded-2xl border border-slate-200 bg-white p-6 shadow-sm hover:shadow-md transition">
-          <span class="text-xs font-bold text-emerald-600 uppercase">ETFs & Investing</span>
-          <h3 class="text-lg font-bold text-slate-900 group-hover:text-[#10B981] transition mt-2">Best ETFs in Australia (2026)</h3>
-          <p class="text-sm text-slate-600 mt-2">Low-cost index picks, VAS vs A200, and simple portfolio setups for everyday Aussies.</p>
-          <div class="mt-4 text-sm font-semibold text-[#0F291E]">Read Guide →</div>
-        </a>
-
-        <a href="/ubank-vs-up-bank" class="group rounded-2xl border border-slate-200 bg-white p-6 shadow-sm hover:shadow-md transition">
-          <span class="text-xs font-bold text-emerald-600 uppercase">Banking</span>
-          <h3 class="text-lg font-bold text-slate-900 group-hover:text-[#10B981] transition mt-2">Ubank vs. UP Bank Review</h3>
-          <p class="text-sm text-slate-600 mt-2">High-interest savings account conditions, bonus rate rules, and app features compared.</p>
-          <div class="mt-4 text-sm font-semibold text-[#0F291E]">Read Review →</div>
-        </a>
-
-        <a href="/raiz-review" class="group rounded-2xl border border-slate-200 bg-white p-6 shadow-sm hover:shadow-md transition">
-          <span class="text-xs font-bold text-emerald-600 uppercase">App Reviews</span>
-          <h3 class="text-lg font-bold text-slate-900 group-hover:text-[#10B981] transition mt-2">Raiz Portfolio Review</h3>
-          <p class="text-sm text-slate-600 mt-2">Micro-investing breakdown, fee changes, portfolio options, and beginner tips.</p>
-          <div class="mt-4 text-sm font-semibold text-[#0F291E]">Read Review →</div>
-        </a>
-      </div>
-    </section>
-
-    <section class="bg-slate-900 text-white py-16 px-4">
-      <div class="max-w-4xl mx-auto text-center space-y-4">
-        <h2 class="text-2xl font-bold">Independent Australian Financial Education</h2>
-        <p class="text-slate-300 text-sm leading-relaxed max-w-2xl mx-auto">
-          DadInvestor is 100% independent. I don't sell financial products, give personal financial advice, or hide anything behind a subscription. My mission is simply to provide free tools and clear information so you can make informed decisions about your financial future.
+      ) : (
+        <p class="empty-articles">
+          Explore our latest investing and personal finance guides.
         </p>
-        <a href="/about" class="bg-slate-900 text-white ">About me</a>
+      )}
+    </section>
 
+    <!-- Calculators -->
+    <section class="calculator-section">
+      <div class="content-section">
+        <div class="section-heading">
+          <h2>Tools for your financial future</h2>
+          <a href="/calculators-and-tools" class="section-link">
+            View all calculators <span aria-hidden="true">→</span>
+          </a>
+        </div>
+
+        <div class="calculator-grid">
+
+          <a
+            href="/calculators-and-tools/future-wealth-calculator"
+            class="calculator-card"
+          >
+            <h3>Future Wealth Calculator</h3>
+            <p>
+              Project your 30-year net worth combining super, ETFs,
+              property and debt.
+            </p>
+            <span>Explore calculator →</span>
+          </a>
+
+          <a
+            href="/calculators-and-tools/mortgage-offset-calculator"
+            class="calculator-card"
+          >
+            <h3>Mortgage vs. Invest</h3>
+            <p>
+              Calculate whether extra cash is better off in your
+              offset account or invested.
+            </p>
+            <span>Explore calculator →</span>
+          </a>
+
+          <a
+            href="/calculators-and-tools/compound-interest-calculator"
+            class="calculator-card"
+          >
+            <h3>Compound Interest Calculator</h3>
+            <p>
+              See how regular contributions and investment growth
+              can build wealth over time.
+            </p>
+            <span>Explore calculator →</span>
+          </a>
+
+        </div>
       </div>
     </section>
+
+    <!-- About -->
+    <section class="about-section">
+      <div class="about-inner">
+        <h2>Money is a means to a richer life.</h2>
+        <p>
+          DadInvestor is an independent Australian resource for people
+          who want to make better financial decisions. Practical guides,
+          useful tools and clear thinking about building long-term wealth
+          and creating more freedom.
+        </p>
+        <a href="/about" class="button-secondary">
+          More about DadInvestor
+        </a>
+      </div>
+    </section>
+
   </main>
 </BaseLayout>
+
+<style>
+  .hero-section {
+    background: var(--di-cream);
+    padding: 72px 24px 88px;
+  }
+
+  .hero-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    align-items: center;
+    gap: 64px;
+  }
+
+  .hero-copy h1 {
+    font-family: var(--di-font-heading);
+    font-size: clamp(3.5rem, 6.2vw, 5rem);
+    font-weight: 600;
+    letter-spacing: -0.055em;
+    line-height: 0.99;
+    color: var(--di-ink);
+  }
+
+  .hero-copy h1 em {
+    font-style: italic;
+  }
+
+  .hero-underline {
+    width: 205px;
+    height: 6px;
+    background: var(--di-forest);
+    border-radius: 100%;
+    transform: rotate(-3deg);
+    margin-top: 14px;
+  }
+
+  .hero-description {
+    max-width: 580px;
+    margin-top: 24px;
+    font-size: 22px;
+    line-height: 1.5;
+    color: var(--di-body);
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-top: 38px;
+  }
+
+  .button-primary,
+  .button-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 60px;
+    padding: 14px 25px;
+    border-radius: 999px;
+    font-family: var(--di-font-heading);
+    font-size: 20px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 180ms ease, color 180ms ease;
+  }
+
+  .button-primary {
+    background: var(--di-forest);
+    color: white;
+  }
+
+  .button-primary:hover {
+    background: var(--di-forest-deep);
+  }
+
+  .button-secondary {
+    border: 1px solid var(--di-line);
+    color: var(--di-forest);
+  }
+
+  .button-secondary:hover {
+    background: var(--di-highlight);
+  }
+
+  .hero-portrait {
+    position: relative;
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 12px;
+  }
+
+  .portrait-frame {
+    background: white;
+    padding: 10px;
+    box-shadow: 0 12px 25px rgb(40 35 25 / 12%);
+    transform: rotate(5deg);
+  }
+
+  .portrait-frame img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    object-position: center 35%;
+  }
+
+  .portrait-scribble {
+    position: absolute;
+    width: 190px;
+    height: 24px;
+    right: -12px;
+    bottom: -12px;
+    border-top: 5px solid var(--di-forest);
+    border-radius: 50%;
+    transform: rotate(-12deg);
+  }
+
+  /* Content sections */
+
+  .content-section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 64px 24px 76px;
+  }
+
+  .section-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 34px;
+  }
+
+  .section-heading h2 {
+    font-size: clamp(2.5rem, 4vw, 3.25rem);
+    letter-spacing: -0.04em;
+  }
+
+  .section-link {
+    flex-shrink: 0;
+    color: var(--di-forest);
+    font-family: var(--di-font-heading);
+    font-size: 21px;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .section-link:hover {
+    text-decoration: underline;
+  }
+
+  /* Articles */
+
+  .article-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 28px;
+  }
+
+  .article-card {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .article-image {
+    overflow: hidden;
+    border-radius: 7px;
+    aspect-ratio: 1.55 / 1;
+    background: var(--di-highlight);
+  }
+
+  .article-image img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    transition: transform 350ms ease;
+  }
+
+  .article-card:hover .article-image img {
+    transform: scale(1.035);
+  }
+
+  .article-card-content {
+    padding: 20px 6px;
+  }
+
+  .article-card h3 {
+    font-size: 29px;
+    line-height: 1.15;
+    letter-spacing: -0.025em;
+    transition: color 180ms ease;
+  }
+
+  .article-card:hover h3 {
+    color: var(--di-forest);
+  }
+
+  .article-card p {
+    margin-top: 10px;
+    font-size: 18px;
+    line-height: 1.5;
+    color: var(--di-muted);
+  }
+
+  .empty-articles {
+    font-size: 20px;
+  }
+
+  /* Calculators */
+
+  .calculator-section {
+    background: var(--di-paper);
+  }
+
+  .calculator-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+  }
+
+  .calculator-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 30px;
+    border: 1px solid var(--di-line);
+    border-radius: 10px;
+    color: inherit;
+    text-decoration: none;
+    transition: border-color 180ms ease, transform 180ms ease;
+  }
+
+  .calculator-card:hover {
+    border-color: var(--di-forest);
+    transform: translateY(-3px);
+  }
+
+  .calculator-card h3 {
+    font-size: 27px;
+    line-height: 1.15;
+  }
+
+  .calculator-card p {
+    margin-top: 14px;
+    font-size: 19px;
+    line-height: 1.5;
+    color: var(--di-muted);
+  }
+
+  .calculator-card span {
+    margin-top: 24px;
+    color: var(--di-forest);
+    font-size: 20px;
+    font-weight: 600;
+  }
+
+  /* About */
+
+  .about-section {
+    padding: 80px 24px;
+    background: var(--di-forest);
+    color: white;
+  }
+
+  .about-inner {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .about-inner h2 {
+    color: white;
+    font-size: clamp(2.5rem, 4vw, 3.5rem);
+  }
+
+  .about-inner p {
+    margin: 24px auto 32px;
+    font-size: 21px;
+    line-height: 1.6;
+    color: #F0F4EF;
+  }
+
+  .about-inner .button-secondary {
+    border-color: rgb(255 255 255 / 45%);
+    color: white;
+  }
+
+  .about-inner .button-secondary:hover {
+    background: rgb(255 255 255 / 10%);
+  }
+
+  /* Responsive */
+
+  @media (max-width: 800px) {
+    .hero-section {
+      padding: 52px 22px 64px;
+    }
+
+    .hero-inner {
+      grid-template-columns: 1fr;
+      gap: 52px;
+    }
+
+    .hero-copy h1 {
+      font-size: clamp(3.2rem, 11vw, 4.5rem);
+    }
+
+    .hero-description {
+      font-size: 20px;
+    }
+
+    .hero-portrait {
+      width: 85%;
+    }
+
+    .article-grid,
+    .calculator-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .hero-actions {
+      flex-direction: column;
+    }
+
+    .hero-actions a {
+      width: 100%;
+    }
+
+    .section-heading {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .article-grid,
+    .calculator-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .article-card h3 {
+      font-size: 27px;
+    }
+
+    .content-section {
+      padding-top: 48px;
+      padding-bottom: 56px;
+    }
+
+    .hero-portrait {
+      width: 90%;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .article-image img,
+    .calculator-card {
+      transition: none;
+    }
+  }
+</style>

@@ -1,7 +1,140 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Work+Sans:wght@400;500;600;700;800&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600;6..72,700&family=Work+Sans:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
 
-html,
+/* DadInvestor — Global design system */
+
+:root {
+  color-scheme: light;
+
+  /* Colours */
+  --di-cream: #F8F3EA;
+  --di-paper: #FFFCF6;
+  --di-forest: #164B35;
+  --di-forest-deep: #103B2A;
+  --di-ink: #18251F;
+  --di-body: #26312B;
+  --di-muted: #626B64;
+  --di-line: #E3D8C8;
+  --di-highlight: #EAE2D5;
+
+  /* Typography */
+  --di-font-heading: 'Newsreader', Georgia, serif;
+  --di-font-body: 'Work Sans', Arial, sans-serif;
+
+  /* Layout */
+  --di-content-width: 1200px;
+  --di-reading-width: 760px;
+  --di-radius-card: 10px;
+  --di-radius-button: 999px;
+}
+
+@theme inline {
+  --color-di-cream: var(--di-cream);
+  --color-di-paper: var(--di-paper);
+  --color-di-forest: var(--di-forest);
+  --color-di-forest-deep: var(--di-forest-deep);
+  --color-di-ink: var(--di-ink);
+  --color-di-body: var(--di-body);
+  --color-di-muted: var(--di-muted);
+  --color-di-line: var(--di-line);
+
+  --font-heading: var(--di-font-heading);
+  --font-sans: var(--di-font-body);
+}
+
+/* Base styles */
+
+html {
+  scroll-behavior: smooth;
+  background: var(--di-cream);
+  color: var(--di-ink);
+  font-family: var(--di-font-body);
+  text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 body {
-  font-family: 'Work Sans', sans-serif;
+  min-height: 100vh;
+  margin: 0;
+  background: var(--di-cream);
+  color: var(--di-body);
+  font-family: var(--di-font-body);
+  font-size: 20px;
+  line-height: 1.55;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--di-ink);
+  font-family: var(--di-font-heading);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.08;
+}
+
+p {
+  line-height: 1.55;
+}
+
+a {
+  color: inherit;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+::selection {
+  background: #D8E5D9;
+  color: var(--di-forest-deep);
+}
+
+:focus-visible {
+  outline: 3px solid var(--di-forest);
+  outline-offset: 3px;
+}
+
+/* Respect reduced motion preferences */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+
+
+/* Desktop article header alignment */
+@media (min-width: 801px) {
+  .article-header-inner {
+    max-width: 1200px !important;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* Ensure headings in dark hero banners remain white */
+header.bg-\[\#164B35\] h1 {
+  color: #FFFCF6 !important;
 }

@@ -1,3 +1,4 @@
+
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import CompoundInterestCalculator from '../../components/compound/CompoundInterestCalculator';
@@ -9,59 +10,95 @@ const toolDetails = {
 };
 ---
 
-<BaseLayout title={`${toolDetails.title} - Dad Investor`} description={toolDetails.description}>
-  <!-- Header Banner -->
-  <header class="bg-[#0F291E] text-white py-12 px-4 border-b border-emerald-900/55">
-    <div class="max-w-7xl mx-auto space-y-3">
+<BaseLayout
+  title={`${toolDetails.title} - Dad Investor`}
+  description={toolDetails.description}
+>
+  <!-- Page Hero -->
+  <header class="bg-[#164B35] text-white py-12 px-4 border-b border-[#103B2A]">
+    <div class="max-w-[1168px] mx-auto space-y-3">
       <div class="flex items-center gap-3">
-        <span class="bg-[#10B981]/20 text-[#10B981] font-semibold text-xs uppercase tracking-wider px-3 py-1 rounded-full border border-[#10B981]/30">
+        <span class="bg-white/10 text-[#F8F3EA] font-semibold text-sm uppercase tracking-wider px-3 py-1 rounded-full border border-white/20">
           {toolDetails.category}
         </span>
       </div>
-      <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight leading-tight text-white max-w-4xl">
+
+      <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight leading-tight !text-[#FFFCF6] max-w-4xl">
         {toolDetails.title}
       </h1>
-      <p class="text-base text-slate-300 leading-relaxed max-w-3xl">
+
+      <p class="text-lg text-[#E1E8E2] leading-relaxed max-w-3xl">
         {toolDetails.description}
       </p>
     </div>
   </header>
 
-  <!-- Main Content Layout with Sidebar -->
-  <main class="bg-[#F8FAFC] py-16 px-4">
-    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-      
-      <!-- Left Column: React Calculator Island -->
+  <!-- Main Content Layout -->
+  <main class="bg-[#F8F3EA] py-12 px-4">
+    <div class="max-w-[1168px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
+
+      <!-- Left Column: Calculator -->
       <div class="lg:col-span-8 space-y-8">
-        <div class="prose prose-slate max-w-none space-y-4">
-          <p class="text-slate-700 leading-relaxed text-base sm:text-lg">
+
+        <!-- Introduction -->
+        <div class="space-y-4">
+          <p class="text-lg text-[#26312B] leading-relaxed">
             Use this calculator to project how your initial capital and regular savings will grow over time through compound interest.
           </p>
-          <p class="text-slate-600 text-sm leading-relaxed">
+
+          <p class="text-base text-[#626B64] leading-relaxed">
             Adjust your contribution frequencies, compound intervals, and optional variance percentage to explore best and worst-case return scenarios.
           </p>
         </div>
 
-        <!-- Mount React Island Here -->
-        <CompoundInterestCalculator client:load />
+        <!-- React Calculator -->
+        <div>
+          <CompoundInterestCalculator client:load />
+        </div>
+
       </div>
 
       <!-- Right Column: Sidebar -->
-      <aside class="lg:col-span-4 space-y-8 sticky top-28">
-        <div class="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm space-y-4 text-center">
-          <span class="bg-slate-100 text-slate-500 font-semibold text-[10px] uppercase tracking-wider px-2.5 py-1 rounded-md">
-            Sponsored / Partner Offer
-          </span>
-          <h3 class="text-lg font-bold text-[#0F291E]">Looking for a Low-Fee Broker?</h3>
-          <p class="text-slate-600 text-sm leading-relaxed">
-            Compare top-rated Australian share trading platforms with our independent fee checker.
-          </p>
-          <a href="/apps-and-tools" class="inline-block w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-3 rounded-xl transition text-sm">
-            View Broker Reviews →
-          </a>
-        </div>
-      </aside>
+      <aside class="lg:col-span-4 space-y-8 lg:sticky lg:top-28">
 
+        <div class="bg-[#FFFCF6] border border-[#E3D8C8] rounded-2xl p-6 space-y-4">
+
+          <h3 class="text-base font-bold !text-[#18251F] border-b border-[#E3D8C8] pb-3">
+            Other Calculators
+          </h3>
+
+          <ul class="space-y-4 text-sm">
+            <li>
+              <a
+                href="/calculators-and-tools/future-wealth-calculator"
+                class="text-[#26312B] hover:text-[#164B35] font-medium transition block"
+              >
+                → Future Wealth Calculator
+              </a>
+            </li>
+
+            <li>
+              <a
+                href="/calculators-and-tools/dividend-payment-calculator"
+                class="text-[#26312B] hover:text-[#164B35] font-medium transition block"
+              >
+                → Dividend Payment Calculator
+              </a>
+            </li>
+
+            <li>
+              <a
+                href="/calculators-and-tools/mortgage-offset-calculator"
+                class="text-[#26312B] hover:text-[#164B35] font-medium transition block"
+              >
+                → Mortgage Offset Calculator
+              </a>
+            </li>
+          </ul>
+
+        </div>
+
+      </aside>
     </div>
   </main>
 </BaseLayout>
